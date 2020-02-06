@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router } from 'react-router-dom';
 import { Provider  } from 'react-redux';
+import { Router } from 'react-router-dom';
 
-import App from './view/App';
 import Configure from './config'
 import firebaseConfing from './env/firebase';
-import FirebasePlatfrom from './platform/FirebasePlatform';
 import BrowserHistory from './history/BrowserHistory';
-import ReduxStore from './store/ReduxStore';
-import AuthenticationService from './service/AuthenticationService';
 import FirebaseAuth from './infrastructure/auth/FirebaseAuth';
+import FirebasePlatfrom from './platform/FirebasePlatform';
+import AuthenticationService from './service/AuthenticationService';
+import ReduxStore from './store/ReduxStore';
+import App from './view/App';
 
 const { platform, history, store } = Configure.init({
   platform: new FirebasePlatfrom(firebaseConfing),
