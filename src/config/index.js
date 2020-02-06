@@ -1,14 +1,19 @@
 class Configure {
-  constructor(plugin) {
-    this.plugin = plugin;
+  constructor({ platform, history, store }) {
+    this.platform = platform;
+    this.history = history;
+    this.store = store;
   }
 
-  static init(plugin) {
-    return new Configure(plugin).init();
+  static init(params) {
+    return new Configure(params).init();
   }
 
   init() {
-    return this.plugin.initialize();
+    this.platform = this.platform.initialize();
+    this.store.createStore();
+    this.history.createHistory();
+    return this;
   }
 }
 

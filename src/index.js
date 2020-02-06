@@ -1,24 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './view/App';
+import { Router } from 'react-router-dom';
+import { Provider  } from 'react-redux';
 
+import App from './view/App';
 import Configure from './config'
 import firebaseConfing from './env/firebase';
-import FirebasePlugin from './plugin/Firbase';
-
+import FirebasePlatfrom from './platform/FirebasePlatform';
+import BrowserHistory from './history/BrowserHistory';
+import ReduxStore from './store/ReduxStore';
 import AuthenticationService from './service/AuthenticationService';
-import FirebaseGoogleAPI from './infrastructure/auth/google/FirebaseGoogleAuth';
+import FirebaseAuth from './infrastructure/auth/FirebaseAuth';
 
-const firebasePlugin = new FirebasePlugin(firebaseConfing);
-const configure = Configure.init(firebasePlugin);
-
-const authService = new AuthenticationService({
-  google: new FirebaseGoogleAPI({
-    auth: configure.auth,
-    provider: new configure.auth.GoogleAuthProvider()
-  })
+const { platform, history, store } = Configure.init({
+  platform: new FirebasePlatfrom(firebaseConfing),
+  history: new BrowserHistory(),
+  store: new ReduxStore()
 });
 
+const authAPI = new FirebaseAuth({
+  auth: platform.auth,
+  history,
+  store
+});
+
+const authService = new AuthenticationService(authAPI);
 const service = { auth: authService }
 
-ReactDOM.render(<App service={service} />, document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={store.store}>
+    <Router history={history.history}>
+      <App service={service} />
+    </Router>
+  </Provider>,
+  document.getElementById('root')
+);

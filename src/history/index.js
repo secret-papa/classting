@@ -1,11 +1,11 @@
-class Plugin {
-  initialize() {
+class History {
+  createHistory() {
     throw new Error('must be override');
   }
-  
-  getPlugin() {
+
+  push() {
     throw new Error('must be override');
   }
 }
 
-export default Plugin;
+export default History;

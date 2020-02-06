@@ -1,8 +1,8 @@
 import * as firebase from "firebase/app";
 import auth from 'firebase/auth';
-import Plugin from './index';
+import Platform from './index';
 
-class FirebasePlugin extends Plugin {
+class FirebasePlatform extends Platform {
   constructor(config) {
     super();
     this.config = config;
@@ -12,11 +12,8 @@ class FirebasePlugin extends Plugin {
   initialize() {
     this.firebase.initializeApp(this.config);
     this.firebase.auth().languageCode = 'ko';
-  }
-
-  getPlugin() {
     return this.firebase;
   }
 }
 
-export default FirebasePlugin;
+export default FirebasePlatform;

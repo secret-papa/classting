@@ -8,4 +8,5 @@ const db = admin.firestore();
 exports.createUser = functions.auth.user().onCreate(async (user) => {
   const claims = { level: 2 };
   await admin.auth().setCustomUserClaims(user.uid, claims);
+  admin.auth().setCustomUserClaims(user.uid, { level: 0 })
 });

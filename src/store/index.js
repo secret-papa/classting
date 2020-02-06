@@ -1,11 +1,11 @@
-class Plugin {
-  initialize() {
+class Store {
+  createStore() {
     throw new Error('must be override');
   }
-  
-  getPlugin() {
+
+  dispatch() {
     throw new Error('must be override');
   }
 }
 
-export default Plugin;
+export default Store;
