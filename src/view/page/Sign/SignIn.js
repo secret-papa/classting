@@ -1,20 +1,33 @@
-import React, { useCallback } from 'react';
+import React, { useState } from 'react';
 
 function SignIn({ authService }) {
-  const handleClickSignInWithGoogle = useCallback(() => {
+  const [emailForm, setEmailForm] = useState({
+    email: '',
+    pwd: ''
+  });
+
+  const handleClickSignInWithGoogle = () => {
     authService.signInWithGoogle();
-  }, [ authService ]);
+  };
 
+  const handleClickSignInEmail = () => {
+    authService.signInEmail(emailForm.email, emailForm.pwd);
+  };
 
-  const email = 'lsh41319kr@naver.com';
-  const pwd = 'clfwjsehd566@';
-  const handleClickSignInEmail = useCallback(() => {
-    authService.signInEmail(email, pwd);
-  }, [ authService ]);
+  const handleChangeEmailForm = ({ target: { name, value }}) => {
+    setEmailForm({
+      ...emailForm,
+      [name]: value
+    })
+  };
 
   return (
     <div>
-      <button type='button' onClick={handleClickSignInEmail}>이메일 회원가입</button>
+      <div>
+        <input type='email' value={emailForm.email} name='email' onChange={handleChangeEmailForm} />
+        <input type='password' value={emailForm.pwd} name='pwd' onChange={handleChangeEmailForm} />
+        <button type='button' onClick={handleClickSignInEmail}>이메일 로그인</button>
+      </div>
       <button type='button' onClick={handleClickSignInWithGoogle}>구글 로그인</button>
     </div>
   )
