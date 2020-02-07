@@ -7,8 +7,12 @@ import Configure from './config'
 import firebaseConfing from './env/firebase';
 import BrowserHistory from './history/BrowserHistory';
 import FirebaseAuth from './infrastructure/auth/FirebaseAuth';
+import FirebaseVote from './infrastructure/vote/FirebaseVote';
 import FirebasePlatfrom from './platform/FirebasePlatform';
+import UserRepository from './repository/UserRepository';
 import AuthenticationService from './service/AuthenticationService';
+import VoteService from './service/VoteService';
+import WebStorage from './storage/WebStorage';
 import ReduxStore from './store/ReduxStore';
 import App from './view/App';
 
@@ -18,13 +22,21 @@ const { platform, history, store } = Configure.init({
   store: new ReduxStore()
 });
 
+const userRepo = new UserRepository(new WebStorage());
+
 const authAPI = new FirebaseAuth({
   auth: platform.auth,
-  store
+  repo: userRepo,
+  storeㅂ
 });
+const voteAPI = new FirebaseVote({ userRepo });
 
 const authService = new AuthenticationService(authAPI);
-const service = { auth: authService }
+const voteService = new VoteService(voteAPI);
+const service = {
+  auth: authService,
+  vote: voteService
+}
 
 ReactDOM.render(
   <Provider store={store.store}>

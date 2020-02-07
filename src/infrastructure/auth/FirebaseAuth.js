@@ -1,10 +1,15 @@
 import Authentication from './index';
 
 class FirebaseAuthentication extends Authentication {
-  constructor({ auth, store }) {
+  constructor({ auth, repo, store }) {
     super();
     this.auth = auth;
+    this.repo = repo;
     this.store = store;
+  }
+
+  async _getUserToken() {
+    return await this.auth().currentUser.getIdToken();
   }
 
   async signInWithGoogle() {
@@ -21,8 +26,19 @@ class FirebaseAuthentication extends Authentication {
   }
 
   authStateChange(action) {
-    this.auth().onAuthStateChanged(user => {
-      this.store.dispatch(action(user));
+    this.auth().onAuthStateChanged(async (user) => {
+      let data = null;
+      if (user) {
+        data = {
+          uid: user.uid,
+          email: user.email
+        }
+        const token = await this._getUserToken();
+        this.repo.saveToken(token);
+      } else {
+        this.repo.deleteToken();
+      }
+      this.store.dispatch(action(data));
     })
   }
 }
