@@ -1,10 +1,9 @@
 import Authentication from './index';
 
 class FirebaseAuthentication extends Authentication {
-  constructor({ auth, history, store }) {
+  constructor({ auth, store }) {
     super();
     this.auth = auth;
-    this.history = history;
     this.store = store;
   }
 
@@ -23,11 +22,6 @@ class FirebaseAuthentication extends Authentication {
 
   authStateChange(action) {
     this.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.history.push('/');
-      } else {
-        this.history.push('/signIn');
-      }
       this.store.dispatch(action(user));
     })
   }

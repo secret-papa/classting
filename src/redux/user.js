@@ -7,13 +7,21 @@ export const createSetUserAction = (user) => ({
   }
 })
 
-export default function(state = {}, action) {
+const initState = {
+  isLoadedUser: false,
+  user: null
+}
+
+export default function (state = initState, action) {
   switch(action.type) {
-    case [SET_USER]: {
+    case SET_USER: {
       return {
-        ...action.payload.user
+        ...state,
+        isLoadedUser: true,
+        user: action.payload.user
       }
     }
-    default: return state
+    default: return state;
+    
   }
 }

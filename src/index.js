@@ -20,7 +20,6 @@ const { platform, history, store } = Configure.init({
 
 const authAPI = new FirebaseAuth({
   auth: platform.auth,
-  history,
   store
 });
 

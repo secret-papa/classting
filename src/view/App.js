@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Home from './page/Home';
 import NotFound from './page/error/NotFound';
-import SignIn from './page/sign/SignIn';
+import SignIn from './page/auth/SignIn';
 import { createSetUserAction } from '../redux/user';
+import { useSelectUser } from './hook/redux/user'
 
 function App({ service }) {
+
+  const { isLoadedUser, user } = useSelectUser();
 
   useEffect(() => {
     service.auth.authStateChange(createSetUserAction);
@@ -13,17 +16,22 @@ function App({ service }) {
   
   return (
     <div>
-      <Switch>
-        <Route path={'/'} exact>
-          <Home authService={service.auth} />
-        </Route>
-        <Route path={'/signIn'}>
-          <SignIn authService={service.auth} />
-        </Route>
-        <Route path={'*'}>
-          <NotFound/>
-        </Route>
-      </Switch>
+      {
+        isLoadedUser ?
+        <Switch>
+          <Route path={'/'} exact>
+            { user ? <Home authService={service.auth} /> : <Redirect to="/signIn" /> }
+          </Route>
+          <Route path={'/signIn'}>
+            { !user ? <SignIn authService={service.auth} /> : <Redirect to="/" />  }
+          </Route>
+          <Route path={'*'}>
+            <NotFound />
+          </Route>
+        </Switch>
+        :
+        <div>로딩중...</div>
+      }
     </div>
   )
 }
