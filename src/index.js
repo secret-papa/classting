@@ -27,7 +27,7 @@ const userRepo = new UserRepository(new WebStorage());
 const authAPI = new FirebaseAuth({
   auth: platform.auth,
   repo: userRepo,
-  storeㅂ
+  store
 });
 const voteAPI = new FirebaseVote({ userRepo });
 

@@ -20,7 +20,7 @@ function App({ service }) {
         isLoadedUser ?
         <Switch>
           <Route path={'/'} exact>
-            { user ? <Home authService={service.auth} /> : <Redirect to="/signIn" /> }
+            { user ? <Home authService={service.auth} voteService={service.vote} /> : <Redirect to="/signIn" /> }
           </Route>
           <Route path={'/signIn'}>
             { !user ? <SignIn authService={service.auth} /> : <Redirect to="/" />  }
