@@ -1,16 +1,14 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
-function LayerPopUp({ closePopUp, children }) {
-
-  const handleClickClosePopUp = () => {
-    closePopUp();
-  }
-
+function LayerPopUp({children }) {
   return (
-    <div>
-      <button type='button' onClick={handleClickClosePopUp}>X</button>
-      { children }
-    </div>
+    ReactDOM.createPortal(
+      <div>
+        { children }
+      </div>,
+      document.getElementById('popUp')
+    )
   )
 }
 

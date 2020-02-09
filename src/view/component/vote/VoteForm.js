@@ -8,7 +8,8 @@ function VoteForm({
   voteItems,
   changeVoteForm,
   setVoteItems,
-  confirmVote
+  confirmVote,
+  closeForm
 }) {
   
   const [addtionalVoteItemValue, setAddtionalVoteItemValue] = useState('');
@@ -17,17 +18,34 @@ function VoteForm({
     startTime: true,
     endTime: true,
     votItemSize: true,
-    voteItemValue: true
+    voteItemValue: true,
+    voteItemUnique: true,
   });
 
+  const validateVoteItemOverlap = () => {
+    if (voteItems.some((value) => value === addtionalVoteItemValue)) {
+      setValidator((validator) => ({
+        ...validator,
+        voteItemUnique: false
+      }));
+      return false;
+    } else {
+      setValidator(() => ({
+        ...validator,
+        voteItemUnique: true
+      }));
+      return true;
+    }
+  }
+
   const addVoteItem = () => {
-    if (addtionalVoteItemValue && validator.voteItemValue) {
+    if (addtionalVoteItemValue && validator.voteItemValue && validateVoteItemOverlap()) {
       if (voteItems.length > 1) setValidator((validator) => ({
         ...validator,
         votItemSize: true
       }));
       
-      setVoteItems(voteItems.concat(addtionalVoteItemValue));
+      setVoteItems(voteItems.concat({value: addtionalVoteItemValue}));
       setAddtionalVoteItemValue('');
     }
   }
@@ -72,7 +90,12 @@ function VoteForm({
         isEndTimeVali &&
         isVoteItemVali
       ) {
+      confirmVote({ title, startTime, endTime, voteItems })
     }
+  }
+
+  const handleClickClose = () => {
+    closeForm();
   }
 
   const makeValidaeVoteItemValueCondition = (value) => {
@@ -160,7 +183,11 @@ function VoteForm({
   }
 
   const updateVoteItem = (updateValue, targetIdx) => {
-    setVoteItems(voteItems.map((value, idx) => targetIdx === idx ? updateValue : value))
+    setVoteItems(voteItems.map((voteItem, idx) => targetIdx === idx ?
+    {
+      ...voteItem,
+      value: updateValue
+    } : voteItem));
   }
 
   return (
@@ -177,7 +204,7 @@ function VoteForm({
       <div>
         <ul>
           {
-            voteItems.map((value, idx) => (
+            voteItems.map(({id, value}, idx) => (
               <li key={idx} >
                 <VoteItemForm 
                   order={idx}
@@ -200,9 +227,13 @@ function VoteForm({
         {
           !validator.voteItemValue && <span>최소 2글자 최대 10글자</span>
         }
+        {
+          !validator.voteItemUnique && <span>중복된 값 사용 불가</span>
+        }
       </div>
       <div>
         <button type='button' onClick={handleClickConfirm}>확인</button>
+        <button type='button' onClick={handleClickClose}>닫기</button>
       </div>
     </div>
   )
