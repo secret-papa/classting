@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import VoteForm from '../../component/vote/VoteForm';
 import useVoteForm from '../../hook/vote';
 import { updateVoteAction } from '../../../redux/vote';
+import { IN_INIT, IN_SUCCESS, IN_PROGRESS } from '../../constant/progress';
 
 function VoteUpdator({
   voteId,
@@ -15,6 +16,7 @@ function VoteUpdator({
 }) {
   const copyinitVoteItmes = useRef();
   const dispatch = useDispatch();
+  const [progressStatus, setProgressStatus] = useState(IN_INIT);
   const [{
     title,
     startTime,
@@ -36,23 +38,28 @@ function VoteUpdator({
       initEndTime !== voteInfo.endTime ||
       JSON.stringify(copyinitVoteItmes.current) !== JSON.stringify(voteInfo.voteItems)
     ) {
+      setProgressStatus(IN_PROGRESS);
       const updatedVoteId = await voteService.updateVote({
         ...voteInfo,
         id: voteId
       });
       const updatedVoteInfo = await voteService.findVoteById(updatedVoteId);
-      dispatch(updateVoteAction(updatedVoteInfo));  
+      closeForm();
+      dispatch(updateVoteAction(updatedVoteInfo));
+    } else {
+      closeForm();
     }
-    closeForm();
   }
 
   useEffect(() => {
     const componentDidMount = async () => {
+      setProgressStatus(IN_PROGRESS);
       const promiseFindVoteItems = initVoteItems.map((voteItemId) => voteService.findVoteItemById(voteItemId));
       const findedVoteItems = await Promise.all(promiseFindVoteItems);
       const voteItemsInfo = findedVoteItems.map(({ id, value }) => ({ id, value }))
       copyinitVoteItmes.current = voteItemsInfo;
       setVoteItems(voteItemsInfo);
+      setProgressStatus(IN_SUCCESS);
     }
 
     componentDidMount();
@@ -60,6 +67,7 @@ function VoteUpdator({
 
   return (
     <VoteForm
+      progressStatus={progressStatus}
       title={title}
       startTime={startTime}
       endTime={endTime}

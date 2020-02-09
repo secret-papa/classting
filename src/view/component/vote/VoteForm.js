@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import VoteItemForm from './VoteItemForm';
+import { IN_SUCCESS, IN_FAIL, IN_PROGRESS } from '../../constant/progress';
 
 function VoteForm({
+  progressStatus,
   title, 
   startTime,
   endTime,
@@ -192,49 +194,60 @@ function VoteForm({
 
   return (
     <div>
-      <label>제목</label>
-      <input name='title' value={title} onChange={handleChangeTitle} />
-      { !validator.title && <span>2글자 ~ 30글자</span> }
-      <label>시작 시간</label>
-      <input name='startTime' type='datetime-local' value={startTime} onChange={handleChangeStartTime} />
-      { !validator.startTime && <span>종료 시간 보다 이른 시간</span> }
-      <label>종료 시간</label>
-      <input name='endTime' type='datetime-local' value={endTime} onChange={handleChangeEndTime} />
-      { !validator.endTime && <span>시작 시간 보다 늦은 시간</span> }
+      {
+        progressStatus === IN_SUCCESS ?
       <div>
-        <ul>
+        <label>제목</label>
+        <input name='title' value={title} onChange={handleChangeTitle} />
+        {!validator.title && <span>2글자 ~ 30글자</span>}
+        <label>시작 시간</label>
+        <input name='startTime' type='datetime-local' value={startTime} onChange={handleChangeStartTime} />
+        {!validator.startTime && <span>종료 시간 보다 이른 시간</span>}
+        <label>종료 시간</label>
+        <input name='endTime' type='datetime-local' value={endTime} onChange={handleChangeEndTime} />
+        {!validator.endTime && <span>시작 시간 보다 늦은 시간</span>}
+        <div>
+          <ul>
+            {
+              voteItems.map(({ id, value }, idx) => (
+                <li key={idx} >
+                  <VoteItemForm
+                    order={idx}
+                    value={value}
+                    deleteVoteItem={deleteVoteItem}
+                    makeValueValidateCondition={makeValidaeVoteItemValueCondition}
+                    updateVoteItem={updateVoteItem}
+                  />
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div>
+          <input value={addtionalVoteItemValue} onChange={handleChangeVoteItemValue} />
+          <button type='button' onClick={addVoteItem}>항목 추가</button>
           {
-            voteItems.map(({id, value}, idx) => (
-              <li key={idx} >
-                <VoteItemForm 
-                  order={idx}
-                  value={value}
-                  deleteVoteItem={deleteVoteItem}
-                  makeValueValidateCondition={makeValidaeVoteItemValueCondition}
-                  updateVoteItem={updateVoteItem}
-                />
-              </li>
-            ))
+            !validator.votItemSize && <span>항목은 3개 이상</span>
           }
-        </ul>
+          {
+            !validator.voteItemValue && <span>최소 2글자 최대 10글자</span>
+          }
+          {
+            !validator.voteItemUnique && <span>중복된 값 사용 불가</span>
+          }
+        </div>
+        <div>
+          <button type='button' onClick={handleClickConfirm}>확인</button>
+          <button type='button' onClick={handleClickClose}>닫기</button>
+        </div>
       </div>
-      <div>
-        <input value={addtionalVoteItemValue} onChange={handleChangeVoteItemValue} />
-        <button type='button' onClick={addVoteItem}>항목 추가</button>
-        {
-          !validator.votItemSize && <span>항목은 3개 이상</span>
-        }
-        {
-          !validator.voteItemValue && <span>최소 2글자 최대 10글자</span>
-        }
-        {
-          !validator.voteItemUnique && <span>중복된 값 사용 불가</span>
-        }
-      </div>
-      <div>
-        <button type='button' onClick={handleClickConfirm}>확인</button>
-        <button type='button' onClick={handleClickClose}>닫기</button>
-      </div>
+      :
+      progressStatus === IN_PROGRESS ?
+        <div>Loading...</div>
+        :
+        progressStatus === IN_FAIL &&
+          <div>FAIL</div>
+      }
     </div>
   )
 }
