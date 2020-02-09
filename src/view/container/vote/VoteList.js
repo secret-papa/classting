@@ -20,7 +20,6 @@ function VoteList({
     }
     componentDidMount();
   }, [ dispatch, voteService ]);
-
   return (
     <div>
       <h1>투표 리스트</h1>
@@ -31,7 +30,7 @@ function VoteList({
               !!votes.length &&
               <ul>
                 {
-                  votes.map(({ id, title, startTime, endTime, voteItems, writer, isViwerWrite, isViewerVote, inProgress }) => (
+                  votes.map(({ id, title, startTime, endTime, voteItems, writer, isViewerWrite, isViewerVote, inProgress }) => (
                     <li key={id}>
                       <VoteListItem
                         id={id}
@@ -40,7 +39,7 @@ function VoteList({
                         endTime={endTime}
                         writer={writer}
                         voteItems={voteItems}
-                        isViwerWrite={isViwerWrite}
+                        isViewerWrite={isViewerWrite}
                         isViewerVote={isViewerVote}
                         inProgress={inProgress}
                         voteService={voteService}

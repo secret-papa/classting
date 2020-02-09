@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import LayerPopUp from '../../ui/LayerPopUp'
 import VoteUpdator from '../../container/vote/VoteUpdator';
 import { deleteVoteAction } from '../../../redux/vote';
@@ -11,7 +12,7 @@ function VoteListItem({
   endTime,
   writer,
   voteItems,
-  isViwerWrite,
+  isViewerWrite,
   isViewerVote,
   inProgress,
   voteService
@@ -43,7 +44,7 @@ function VoteListItem({
       {writer.email}
       {inProgress ? '진행 중' : '종료 됨'}
       {
-        isViwerWrite &&
+        isViewerWrite &&
         <>
           <button type='button' onClick={handleClickUpdate}>수정</button>
           <button type='button' onClick={handleClickDelete}>삭제</button>
@@ -51,14 +52,9 @@ function VoteListItem({
       }
       {
         inProgress &&
-        <>
-          {
-            isViewerVote ?
-              <button type='button'>결과 보기</button>
-            :
-              <button type='button'>투표 하기</button>
-          }
-        </>
+        <Link to={`/vote/${id}`}>
+          { isViewerVote ? '결과 보기' : '투표 하기' }
+        </Link>
       }
       {
         updateVotePopUpStatus &&

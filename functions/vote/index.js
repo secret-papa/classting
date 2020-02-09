@@ -33,7 +33,7 @@ module.exports = (db) => {
       data.push({
         id: doc.id,
         ...result,
-        isViwerWrite: result.writer.uid === req.user.uid,
+        isViewerWrite: result.writer.uid === req.user.uid,
         inProgress
       })
     });
@@ -42,7 +42,7 @@ module.exports = (db) => {
       const promiseVoteItems = vote.voteItems.map((voteItemId) => db.collection('voteItems').doc(voteItemId).get())
       const voteItemDocs = await Promise.all(promiseVoteItems);
       const isViwerVotes = voteItemDocs.map((voteItemDoc) => voteItemDoc.data().votedUser.some((userId) => userId === req.user.uid ));
-      vote.isViwerVote = isViwerVotes.some((isViwerVote) => isViwerVote);
+      vote.isViewerVote = isViwerVotes.some((isViwerVote) => isViwerVote);
     }
     res.send(data);
   });
@@ -57,14 +57,14 @@ module.exports = (db) => {
       const result = {
         id: doc.id,
         ...data,
-        isViwerWrite: data.writer.uid === req.user.uid,
+        isViewerWrite: data.writer.uid === req.user.uid,
         inProgress
       };
 
       const promiseVoteItems = data.voteItems.map((voteItemId) => db.collection('voteItems').doc(voteItemId).get());
       const voteItemDocs = await Promise.all(promiseVoteItems);
       const isViwerVotes = voteItemDocs.map((voteItemDoc) => voteItemDoc.data().votedUser.some((userId) => userId === req.user.uid));
-      result.isViwerVote = isViwerVotes.some((isViwerVote) => isViwerVote);
+      result.isViewerVote = isViwerVotes.some((isViwerVote) => isViwerVote);
       res.send(result);
     }
   });
@@ -147,6 +147,15 @@ module.exports = (db) => {
     });
 
     res.send(votesRef.id);
+  });
+
+  app.put('/cast/:itemId', async (req, res) => {
+    const itemId = req.params.itemId;
+    await db.collection('voteItems').doc(itemId).update({
+      votedUser: admin.firestore.FieldValue.arrayUnion(req.user.uid)
+    });
+
+    res.send(itemId);
   });
 
   return app;

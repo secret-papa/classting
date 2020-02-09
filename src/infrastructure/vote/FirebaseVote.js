@@ -43,6 +43,10 @@ class FirebaseVoteAPI extends VoteAPI {
       data: voteInfo
     })
   }
+
+  castVote(itemId) {
+    return this.http.put(`/cast/${itemId}`)
+  }
 }
 
 export default FirebaseVoteAPI;

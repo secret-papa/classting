@@ -90,7 +90,12 @@ class VoteService {
     const { data } = await this.voteAPI.updateVote({ id, title, startTime, endTime, voteItems });
     
     return data;
-    
+  }
+
+  async castVote(itemId) {
+    if (!itemId && Validator.isStr(itemId)) throw new Error('invalid vlaue type of itemId');
+    const { data } = await this.voteAPI.castVote(itemId);
+    return data;
   }
 }
 

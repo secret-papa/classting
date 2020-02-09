@@ -3,6 +3,8 @@ const ADD_VOTE = 'vote/ADD_VOTE';
 const DELETE_VOTE = 'vote/DELETE_VOTE';
 const UPDATE_VOTE = 'vote/UPDATE_VOTE';
 
+const CAST_VOTE = 'vote/CAST_VOTE';
+
 export const setVotesAction = (votes) => ({
   type: SET_VOTES,
   payload: votes
@@ -21,6 +23,11 @@ export const deleteVoteAction = (voteId) => ({
 export const updateVoteAction = (updateVote) => ({
   type: UPDATE_VOTE,
   payload: updateVote
+});
+
+export const castVoteAction = (voteId) => ({
+  type: CAST_VOTE,
+  payload: voteId
 });
 
 const initialState = {
@@ -51,6 +58,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         votes: state.votes.map((vote) => vote.id === action.payload.id ? action.payload : vote)
+      }
+    }
+    case CAST_VOTE: {
+      return {
+        ...state,
+        votes: state.votes.map((vote) => vote.id === action.payload ? { ...vote, isViewerVote: true} : vote)
       }
     }
     default: return state;

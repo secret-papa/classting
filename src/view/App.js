@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Home from './page/Home';
 import NotFound from './page/error/NotFound';
 import SignIn from './page/auth/SignIn';
+import VoteDetail from './page/VoteDetail';
 import { createSetUserAction } from '../redux/user';
 import { useSelectUser } from './hook/redux/user'
 
@@ -22,6 +23,7 @@ function App({ service }) {
           <Route path={'/'} exact>
             { user ? <Home authService={service.auth} voteService={service.vote} /> : <Redirect to="/signIn" /> }
           </Route>
+          <Route path={'/vote/:voteId'} render={(props) => <VoteDetail {...props} voteService={service.vote} />} />
           <Route path={'/signIn'}>
             { !user ? <SignIn authService={service.auth} /> : <Redirect to="/" />  }
           </Route>
