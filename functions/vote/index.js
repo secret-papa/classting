@@ -101,6 +101,11 @@ module.exports = (db) => {
     }
   });
 
+  app.delete('/:voteId', async (req, res) => {
+    await db.collection('votes').doc(req.params.voteId).delete();
+    res.send(req.params.voteId);
+  });
+
   app.post('/', async (req, res) => {
     const {
       title,

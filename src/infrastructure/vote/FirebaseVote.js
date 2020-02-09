@@ -22,6 +22,10 @@ class FirebaseVoteAPI extends VoteAPI {
     });
   }
 
+  deleteVoteById(voteId) {
+    return this.http.delete(`/${voteId}`);
+  }
+
   getAllVote() {
     return this.http.get('/all');
   }

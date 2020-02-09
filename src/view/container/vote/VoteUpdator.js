@@ -46,7 +46,7 @@ function VoteUpdator({
     }
 
     componentDidMount();
-  }, [ voteService ]);
+  }, [ initVoteItems, setVoteItems, voteService ]);
 
   return (
     <VoteForm

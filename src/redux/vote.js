@@ -13,6 +13,11 @@ export const addVoteAction = (newVote) => ({
   payload: newVote
 });
 
+export const deleteVoteAction = (voteId) => ({
+  type: DELETE_VOTE,
+  payload: voteId
+});
+
 export const updateVoteAction = (updateVote) => ({
   type: UPDATE_VOTE,
   payload: updateVote
@@ -34,6 +39,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         votes: action.payload
+      }
+    }
+    case DELETE_VOTE: {
+      return {
+        ...state,
+        votes: state.votes.filter(({ id }) => id !== action.payload)
       }
     }
     case UPDATE_VOTE: {

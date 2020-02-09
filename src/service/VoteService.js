@@ -5,7 +5,7 @@ class VoteService {
     this.voteAPI = voteAPI;
   }
 
-  createVote({ title, startTime, endTime, voteItems }) {
+  async createVote({ title, startTime, endTime, voteItems }) {
     if (!Validator.isStr(title)) throw new Error('invalid type of title');
     if (!Validator.checkDateFormYYYYMMDDHHMM(startTime)) throw new Error('invalid type of startTime');
     if (!Validator.checkDateFormYYYYMMDDHHMM(endTime)) throw new Error('invalid type of endTime');
@@ -13,8 +13,14 @@ class VoteService {
     voteItems.forEach(({ value }) => {
       if (!value && !Validator.isStr(value)) throw new Error('invalid value in voteItems');
     });
+    const { data } = await this.voteAPI.postVote({ title, startTime, endTime, voteItems });
+    return data;
+  }
 
-    return this.voteAPI.postVote({ title, startTime, endTime, voteItems });
+  async deleteVoteById(voteId) {
+    if (!voteId && !Validator.isStr(voteId)) throw new Error('invalid value of voteId');
+    const { data } = await this.voteAPI.deleteVoteById(voteId);
+    return data;
   }
 
   async getAllVote() {

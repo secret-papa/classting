@@ -18,7 +18,7 @@ function VoteCreator({ closeForm, voteService }) {
   ] = useVoteForm();
 
   const createVote = async (confirmValue) => {
-    const { data: voteId } = await voteService.createVote(confirmValue);
+    const voteId = await voteService.createVote(confirmValue);
     const voteInfo = await voteService.findVoteById(voteId);
     dispatch(addVoteAction(voteInfo));
     closeForm();

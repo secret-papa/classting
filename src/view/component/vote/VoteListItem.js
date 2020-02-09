@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import LayerPopUp from '../../ui/LayerPopUp'
 import VoteUpdator from '../../container/vote/VoteUpdator';
+import { deleteVoteAction } from '../../../redux/vote';
 
 function VoteListItem({
   id,
@@ -13,6 +15,7 @@ function VoteListItem({
   isViewerVote,
   voteService
 }) {
+  const dispatch = useDispatch();
   const [updateVotePopUpStatus, setUpdateVotePopUpStatus] = useState(false);
 
   const closeUpdateVotePopUp = () => {
@@ -20,6 +23,15 @@ function VoteListItem({
   }
   const openUpdateVotePopUp = () => {
     setUpdateVotePopUpStatus(true);
+  }
+
+  const handleClickUpdate = () => {
+    openUpdateVotePopUp();
+  }
+
+  const handleClickDelete = async () => {
+    const voteId = await voteService.deleteVoteById(id);
+    dispatch(deleteVoteAction(voteId));
   }
 
   return (
@@ -31,8 +43,8 @@ function VoteListItem({
       {
         isViwerWrite &&
         <>
-          <button type='button' onClick={openUpdateVotePopUp}>수정</button>
-          <button type='button' >삭제</button>
+          <button type='button' onClick={handleClickUpdate}>수정</button>
+          <button type='button' onClick={handleClickDelete}>삭제</button>
         </>
       }
       {
