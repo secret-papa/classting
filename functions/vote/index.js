@@ -102,6 +102,11 @@ module.exports = (db) => {
   });
 
   app.delete('/:voteId', async (req, res) => {
+    const doc = await db.collection('votes').doc(req.params.voteId).get();
+    const result = doc.data();
+    const promiseDeleteItem = result.voteItems.map((voteId) => db.collection('voteItems').doc(voteId).delete());
+    await Promise.all(promiseDeleteItem);
+
     await db.collection('votes').doc(req.params.voteId).delete();
     res.send(req.params.voteId);
   });
