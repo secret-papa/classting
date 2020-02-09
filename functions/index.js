@@ -9,7 +9,7 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-exports.vote = functions.https.onRequest(vote(db));
+exports.vote = functions.region('asia-east2').https.onRequest(vote(db));
 
 exports.createUser = functions.auth.user().onCreate(async (user) => {
   const { uid, email, emailVerified, disabled } = user;

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import VoteForm from '../../component/vote/VoteForm';
 import useVoteForm from '../../hook/vote';
@@ -13,6 +13,7 @@ function VoteUpdator({
   voteService,
   closeForm
 }) {
+  const copyinitVoteItmes = useRef();
   const dispatch = useDispatch();
   const [{
     title,
@@ -29,12 +30,19 @@ function VoteUpdator({
   });
 
   const updateVoteInfo = async (voteInfo) => {
-    const updatedVoteId = await voteService.updateVote({
-      ...voteInfo,
-      id: voteId
-    });
-    const updatedVoteInfo = await voteService.findVoteById(updatedVoteId);
-    dispatch(updateVoteAction(updatedVoteInfo));
+    if (
+      initTitle !== voteInfo.title ||
+      initStartTime !== voteInfo.startTime ||
+      initEndTime !== voteInfo.endTime ||
+      JSON.stringify(copyinitVoteItmes.current) !== JSON.stringify(voteInfo.voteItems)
+    ) {
+      const updatedVoteId = await voteService.updateVote({
+        ...voteInfo,
+        id: voteId
+      });
+      const updatedVoteInfo = await voteService.findVoteById(updatedVoteId);
+      dispatch(updateVoteAction(updatedVoteInfo));  
+    }
     closeForm();
   }
 
@@ -42,7 +50,9 @@ function VoteUpdator({
     const componentDidMount = async () => {
       const promiseFindVoteItems = initVoteItems.map((voteItemId) => voteService.findVoteItemById(voteItemId));
       const findedVoteItems = await Promise.all(promiseFindVoteItems);
-      setVoteItems(findedVoteItems.map(({ id, value }) => ({ id, value })));
+      const voteItemsInfo = findedVoteItems.map(({ id, value }) => ({ id, value }))
+      copyinitVoteItmes.current = voteItemsInfo;
+      setVoteItems(voteItemsInfo);
     }
 
     componentDidMount();
