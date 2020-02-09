@@ -58,6 +58,36 @@ module.exports = (db) => {
     }
   });
 
+  app.put('/:voteId', async (req, res) => {
+    const {
+      title,
+      startTime,
+      endTime,
+      voteItems
+    } = req.body.data;
+
+    for (const voteItem of voteItems) {
+      if (voteItem.id) {
+        await db.collection('voteItems').doc(voteItem.id).update({ value: voteItem.value })
+      } else {
+        const { id: newVoteItemId } = await db.collection('voteItems').add({
+          value: voteItem.value,
+          votedUser: []
+        });
+        voteItem.id = newVoteItemId;
+      }
+    }
+
+    await db.collection('votes').doc(req.params.voteId).update({
+      title,
+      startTime,
+      endTime,
+      voteItems: voteItems.map(({ id }) => id)
+    });
+
+    res.send(req.params.voteId);
+  });
+
   app.get('/items/:id', async (req, res) => {
     const doc = await db.collection('voteItems').doc(req.params.id).get();
     if (!doc.exists) {

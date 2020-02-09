@@ -33,6 +33,12 @@ class FirebaseVoteAPI extends VoteAPI {
   findVoteById(voteId) {
     return this.http.get(`/${voteId}`)
   }
+
+  updateVote(voteInfo) {
+    return this.http.put(`/${voteInfo.id}`, {
+      data: voteInfo
+    })
+  }
 }
 
 export default FirebaseVoteAPI;

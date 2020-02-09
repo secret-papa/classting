@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import VoteForm from '../../component/vote/VoteForm';
 import useVoteForm from '../../hook/vote';
+import { updateVoteAction } from '../../../redux/vote';
 
 function VoteUpdator({
   voteId,
@@ -11,6 +13,7 @@ function VoteUpdator({
   voteService,
   closeForm
 }) {
+  const dispatch = useDispatch();
   const [{
     title,
     startTime,
@@ -25,8 +28,14 @@ function VoteUpdator({
     endTime: initEndTime
   });
 
-  const updateVoteInfo = ({ title, startTime, endTime, voteItems }) => {
-    console.log(voteItems);
+  const updateVoteInfo = async (voteInfo) => {
+    const updatedVoteId = await voteService.updateVote({
+      ...voteInfo,
+      id: voteId
+    });
+    const updatedVoteInfo = await voteService.findVoteById(updatedVoteId);
+    dispatch(updateVoteAction(updatedVoteInfo));
+    closeForm();
   }
 
   useEffect(() => {

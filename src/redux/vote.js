@@ -13,6 +13,11 @@ export const addVoteAction = (newVote) => ({
   payload: newVote
 });
 
+export const updateVoteAction = (updateVote) => ({
+  type: UPDATE_VOTE,
+  payload: updateVote
+});
+
 const initialState = {
   votes: []
 };
@@ -29,6 +34,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         votes: action.payload
+      }
+    }
+    case UPDATE_VOTE: {
+      return {
+        ...state,
+        votes: state.votes.map((vote) => vote.id === action.payload.id ? action.payload : vote)
       }
     }
     default: return state;

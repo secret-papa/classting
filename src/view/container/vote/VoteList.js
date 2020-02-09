@@ -27,6 +27,7 @@ function VoteList({
             votes.map(({ id, title, startTime, endTime, voteItems, writer, isViwerWrite, isViewerVote }) => (
               <li key={id}>
                 <VoteListItem
+                  id={id}
                   title={title}
                   startTime={startTime}
                   endTime={endTime}

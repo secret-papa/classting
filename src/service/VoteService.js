@@ -9,7 +9,10 @@ class VoteService {
     if (!Validator.isStr(title)) throw new Error('invalid type of title');
     if (!Validator.checkDateFormYYYYMMDDHHMM(startTime)) throw new Error('invalid type of startTime');
     if (!Validator.checkDateFormYYYYMMDDHHMM(endTime)) throw new Error('invalid type of endTime');
-    if (!Validator.isArray(voteItems) && !Validator.isArrayItemObj(voteItems) && voteItems.value) throw new Error('invalid type of voteItems');
+    if (!Validator.isArray(voteItems) && !Validator.isArrayItemObj(voteItems)) throw new Error('invalid type of voteItems');
+    voteItems.forEach(({ value }) => {
+      if (!value && !Validator.isStr(value)) throw new Error('invalid value in voteItems');
+    });
 
     return this.voteAPI.postVote({ title, startTime, endTime, voteItems });
   }
@@ -65,7 +68,18 @@ class VoteService {
     return data;
   }
 
-  async updateVote() {
+  async updateVote({ id, title, startTime, endTime, voteItems }) {
+    if (!id) throw new Error('id is empty');
+    if (!title && !Validator.isStr(title)) throw new Error('invalid value type of id');
+    if (!startTime && !Validator.checkDateFormYYYYMMDDHHMM(startTime)) throw new Error('invalid value form of startTime');
+    if (!endTime && !Validator.checkDateFormYYYYMMDDHHMM(endTime)) throw new Error('invalid value form of endTime');
+    if (!Validator.isArray(voteItems) && !Validator.isObject(voteItems)) throw new Error('invalid value in voteItems');
+    voteItems.forEach(({ value }) => {
+      if (!value && !Validator.isStr(value)) throw new Error('invalid value in voteItems');
+    });
+    const { data } = await this.voteAPI.updateVote({ id, title, startTime, endTime, voteItems });
+    
+    return data;
     
   }
 }
