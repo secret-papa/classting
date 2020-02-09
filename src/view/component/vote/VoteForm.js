@@ -23,7 +23,7 @@ function VoteForm({
   });
 
   const validateVoteItemOverlap = () => {
-    if (voteItems.some((value) => value === addtionalVoteItemValue)) {
+    if (voteItems.some(({ value }) => value === addtionalVoteItemValue)) {
       setValidator((validator) => ({
         ...validator,
         voteItemUnique: false

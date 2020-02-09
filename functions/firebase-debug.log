@@ -243,3 +243,73 @@
 [info] i  functions: Finished "vote" in ~1s
 [debug] [2020-02-09T13:34:32.869Z] [worker-vote-e0b37f34-3316-4a83-b341-bf14918e474e]: IDLE
 [debug] [2020-02-09T13:34:32.869Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2020-02-09T13:35:09.492Z] File /Users/lee/Desktop/lsh/classting/functions/vote/index.js changed, reloading triggers
+[debug] [2020-02-09T13:35:10.494Z] [worker-pool] Shutting down IDLE worker (~diagnostic~)
+[debug] [2020-02-09T13:35:10.494Z] [worker-~diagnostic~-93d01d5e-dbac-4efd-9036-17edaca5029a]: FINISHING
+[debug] [2020-02-09T13:35:10.495Z] [worker-pool] Shutting down IDLE worker (vote)
+[debug] [2020-02-09T13:35:10.495Z] [worker-vote-e0b37f34-3316-4a83-b341-bf14918e474e]: FINISHING
+[debug] [2020-02-09T13:35:10.510Z] [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-02-09T13:35:10.510Z] [worker-pool] Adding worker with key ~diagnostic~, total=2
+[debug] [2020-02-09T13:35:10.510Z] [worker-pool] submitWork(triggerId=)
+[debug] [2020-02-09T13:35:10.511Z] [worker-~diagnostic~-4b3a8613-658b-42a3-bf35-58fc8e7d2ef9]: Assigning socketPath: /var/folders/h6/gnq4hnxd1g3gzw050n48gb4r0000gn/T/fire_emu_64173.sock
+[debug] [2020-02-09T13:35:10.511Z] [worker-~diagnostic~-4b3a8613-658b-42a3-bf35-58fc8e7d2ef9]: BUSY
+[debug] [2020-02-09T13:35:10.514Z] [worker-~diagnostic~-93d01d5e-dbac-4efd-9036-17edaca5029a]: exited
+[debug] [2020-02-09T13:35:10.514Z] [worker-~diagnostic~-93d01d5e-dbac-4efd-9036-17edaca5029a]: FINISHED
+[debug] [2020-02-09T13:35:10.514Z] [worker-vote-e0b37f34-3316-4a83-b341-bf14918e474e]: exited
+[debug] [2020-02-09T13:35:10.514Z] [worker-vote-e0b37f34-3316-4a83-b341-bf14918e474e]: FINISHED
+[debug] [2020-02-09T13:35:10.933Z] [runtime-status] [64173] Functions runtime initialized. {"cwd":"/Users/lee/Desktop/lsh/classting/functions","node_version":"10.15.3"}
+[debug] [2020-02-09T13:35:10.935Z] [runtime-status] [64173] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true,"pubsub_emulator":true}
+[debug] [2020-02-09T13:35:10.938Z] [runtime-status] [64173] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.9.2","resolution":"/Users/lee/Desktop/lsh/classting/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-02-09T13:35:10.940Z] [runtime-status] [64173] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/lee/Desktop/lsh/classting/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-02-09T13:35:10.940Z] [runtime-status] [64173] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/lee/Desktop/lsh/classting/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-02-09T13:35:11.511Z] [worker-~diagnostic~-4b3a8613-658b-42a3-bf35-58fc8e7d2ef9]: IDLE
+[debug] [2020-02-09T13:36:10.446Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2020-02-09T13:36:10.446Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2020-02-09T13:36:10.446Z] Accepted request OPTIONS /classting-c59dd/us-central1/vote/all --> vote
+[debug] [2020-02-09T13:36:10.446Z] [worker-pool] Cleaned up workers for ~diagnostic~: 2 --> 1
+[debug] [2020-02-09T13:36:10.446Z] [worker-pool] Cleaned up workers for vote: 1 --> 0
+[debug] [2020-02-09T13:36:10.450Z] [worker-pool] addWorker(vote)
+[debug] [2020-02-09T13:36:10.450Z] [worker-pool] Adding worker with key vote, total=1
+[debug] [2020-02-09T13:36:10.450Z] [worker-pool] submitWork(triggerId=vote)
+[debug] [2020-02-09T13:36:10.450Z] [worker-vote-e2ea7350-a524-42b4-b59a-14a12c270bae]: Assigning socketPath: /var/folders/h6/gnq4hnxd1g3gzw050n48gb4r0000gn/T/fire_emu_64256.sock
+[debug] [2020-02-09T13:36:10.450Z] [worker-vote-e2ea7350-a524-42b4-b59a-14a12c270bae]: BUSY
+[debug] [2020-02-09T13:36:10.737Z] [runtime-status] [64256] Functions runtime initialized. {"cwd":"/Users/lee/Desktop/lsh/classting/functions","node_version":"10.15.3"}
+[debug] [2020-02-09T13:36:10.740Z] [runtime-status] [64256] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true,"pubsub_emulator":true}
+[debug] [2020-02-09T13:36:10.742Z] [runtime-status] [64256] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.9.2","resolution":"/Users/lee/Desktop/lsh/classting/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-02-09T13:36:10.743Z] [runtime-status] [64256] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/lee/Desktop/lsh/classting/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-02-09T13:36:10.744Z] [runtime-status] [64256] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/lee/Desktop/lsh/classting/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-02-09T13:36:11.150Z] [runtime-status] [64256] Trigger "vote" has been found, beginning invocation!
+[info] i  functions: Beginning execution of "vote"
+[debug] [2020-02-09T13:36:11.151Z] [runtime-status] [64256] triggerDefinition {"httpsTrigger":{},"name":"vote","entryPoint":"vote"}
+[debug] [2020-02-09T13:36:11.151Z] [runtime-status] [64256] Running vote in mode HTTPS
+[debug] [2020-02-09T13:36:11.154Z] [runtime-status] [64256] Attempting to listen to socketPath: /var/folders/h6/gnq4hnxd1g3gzw050n48gb4r0000gn/T/fire_emu_64256.sock
+[debug] [2020-02-09T13:36:11.159Z] [functions] Runtime ready! Sending request!
+[debug] [2020-02-09T13:36:11.166Z] [runtime-status] [64256] Ephemeral server handling OPTIONS request
+[debug] [2020-02-09T13:36:11.172Z] [runtime-status] [64256] Ephemeral server survived.
+[info] i  functions: Finished "vote" in ~1s
+[debug] [2020-02-09T13:36:11.175Z] [work-queue] {"queueLength":1,"workRunningCount":1}
+[debug] [2020-02-09T13:36:11.175Z] [work-queue] {"queueLength":0,"workRunningCount":2}
+[debug] [2020-02-09T13:36:11.175Z] Accepted request GET /classting-c59dd/us-central1/vote/all --> vote
+[debug] [2020-02-09T13:36:11.180Z] [worker-pool] addWorker(vote)
+[debug] [2020-02-09T13:36:11.180Z] [worker-pool] Adding worker with key vote, total=2
+[debug] [2020-02-09T13:36:11.180Z] [worker-pool] submitWork(triggerId=vote)
+[debug] [2020-02-09T13:36:11.180Z] [worker-vote-4e787061-8b31-4bcb-839b-daed2116d4fd]: Assigning socketPath: /var/folders/h6/gnq4hnxd1g3gzw050n48gb4r0000gn/T/fire_emu_64257.sock
+[debug] [2020-02-09T13:36:11.180Z] [worker-vote-4e787061-8b31-4bcb-839b-daed2116d4fd]: BUSY
+[debug] [2020-02-09T13:36:11.180Z] [worker-vote-e2ea7350-a524-42b4-b59a-14a12c270bae]: IDLE
+[debug] [2020-02-09T13:36:11.180Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2020-02-09T13:36:11.481Z] [runtime-status] [64257] Functions runtime initialized. {"cwd":"/Users/lee/Desktop/lsh/classting/functions","node_version":"10.15.3"}
+[debug] [2020-02-09T13:36:11.483Z] [runtime-status] [64257] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true,"pubsub_emulator":true}
+[debug] [2020-02-09T13:36:11.485Z] [runtime-status] [64257] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.9.2","resolution":"/Users/lee/Desktop/lsh/classting/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-02-09T13:36:11.487Z] [runtime-status] [64257] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/lee/Desktop/lsh/classting/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-02-09T13:36:11.489Z] [runtime-status] [64257] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/lee/Desktop/lsh/classting/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-02-09T13:36:11.886Z] [runtime-status] [64257] Trigger "vote" has been found, beginning invocation!
+[info] i  functions: Beginning execution of "vote"
+[debug] [2020-02-09T13:36:11.887Z] [runtime-status] [64257] triggerDefinition {"httpsTrigger":{},"name":"vote","entryPoint":"vote"}
+[debug] [2020-02-09T13:36:11.887Z] [runtime-status] [64257] Running vote in mode HTTPS
+[debug] [2020-02-09T13:36:11.890Z] [runtime-status] [64257] Attempting to listen to socketPath: /var/folders/h6/gnq4hnxd1g3gzw050n48gb4r0000gn/T/fire_emu_64257.sock
+[debug] [2020-02-09T13:36:11.894Z] [functions] Runtime ready! Sending request!
+[debug] [2020-02-09T13:36:11.900Z] [runtime-status] [64257] Ephemeral server handling GET request
+[debug] [2020-02-09T13:36:11.951Z] [runtime-status] [64257] Ephemeral server survived.
+[info] i  functions: Finished "vote" in ~1s
+[debug] [2020-02-09T13:36:13.230Z] [worker-vote-4e787061-8b31-4bcb-839b-daed2116d4fd]: IDLE
+[debug] [2020-02-09T13:36:13.230Z] [work-queue] {"queueLength":0,"workRunningCount":0}
