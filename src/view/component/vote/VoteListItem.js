@@ -13,6 +13,7 @@ function VoteListItem({
   voteItems,
   isViwerWrite,
   isViewerVote,
+  inProgress,
   voteService
 }) {
   const dispatch = useDispatch();
@@ -37,9 +38,10 @@ function VoteListItem({
   return (
     <div>
       {title}
-      {startTime}
-      {endTime}
+      {startTime.split("T").join(' ')}
+      {endTime.split("T").join(' ')}
       {writer.email}
+      {inProgress ? '진행 중' : '종료 됨'}
       {
         isViwerWrite &&
         <>
@@ -48,10 +50,15 @@ function VoteListItem({
         </>
       }
       {
-        isViewerVote ? 
-        <button type='button'>결과 보기</button>
-        :
-        <button type='button'>투표 하기</button>
+        inProgress &&
+        <>
+          {
+            isViewerVote ?
+              <button type='button'>결과 보기</button>
+            :
+              <button type='button'>투표 하기</button>
+          }
+        </>
       }
       {
         updateVotePopUpStatus &&

@@ -15,6 +15,10 @@ class Validator {
     return target.constructor === Object;
   }
 
+  static isBoolean(target) {
+    return typeof target === 'boolean';
+  }
+
   static isArrayItemObj(target) {
     return target.some(value => !this.isObject(value));
   }

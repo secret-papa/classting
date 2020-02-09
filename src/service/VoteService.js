@@ -31,14 +31,16 @@ class VoteService {
       startTime,
       endTime,
       writer,
-      voteItems
+      voteItems,
+      inProgress
     }) => {
       if (!id) throw new Error('id is empty');
       if (!title && !Validator.isStr(title)) throw new Error('invalid value type of id');
       if (!startTime && !Validator.checkDateFormYYYYMMDDHHMM(startTime)) throw new Error('invalid value form of startTime');
       if (!endTime && !Validator.checkDateFormYYYYMMDDHHMM(endTime)) throw new Error('invalid value form of endTime');
       if (!Validator.isArray(voteItems) && !Validator.isArrayItemStr(voteItems)) throw new Error('invalid value in voteItems');
-      if (!writer && !writer.email && !writer.uid && !Validator.isStr(writer.uid) && !Validator.checkEmailForm(writer.email)) throw new Error('invalid value in writer')
+      if (!writer && !writer.email && !writer.uid && !Validator.isStr(writer.uid) && !Validator.checkEmailForm(writer.email)) throw new Error('invalid value in writer');
+      if (!inProgress && !Validator.isBoolean(inProgress)) throw new Error('invalid value type of inProgress');
     });
     return data;
   }
@@ -53,7 +55,8 @@ class VoteService {
       startTime,
       endTime,
       writer,
-      voteItems
+      voteItems,
+      inProgress
     } = data;
 
     if (!id) throw new Error('id is empty');
@@ -62,6 +65,7 @@ class VoteService {
     if (!endTime && !Validator.checkDateFormYYYYMMDDHHMM(endTime)) throw new Error('invalid value form of endTime');
     if (!Validator.isArray(voteItems) && !Validator.isArrayItemStr(voteItems)) throw new Error('invalid value in voteItems');
     if (!writer && !writer.email && !writer.uid && !Validator.isStr(writer.uid) && !Validator.checkEmailForm(writer.email)) throw new Error('invalid value in writer');
+    if (!inProgress && !Validator.isBoolean(inProgress)) throw new Error('invalid value type of inProgress')
 
     return data;
   }

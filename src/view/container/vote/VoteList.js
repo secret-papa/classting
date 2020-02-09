@@ -31,7 +31,7 @@ function VoteList({
               !!votes.length &&
               <ul>
                 {
-                  votes.map(({ id, title, startTime, endTime, voteItems, writer, isViwerWrite, isViewerVote }) => (
+                  votes.map(({ id, title, startTime, endTime, voteItems, writer, isViwerWrite, isViewerVote, inProgress }) => (
                     <li key={id}>
                       <VoteListItem
                         id={id}
@@ -42,6 +42,7 @@ function VoteList({
                         voteItems={voteItems}
                         isViwerWrite={isViwerWrite}
                         isViewerVote={isViewerVote}
+                        inProgress={inProgress}
                         voteService={voteService}
                       />
                     </li>
