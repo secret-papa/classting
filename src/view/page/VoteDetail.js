@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import VoteCasting from '../container/vote/VoteCasting';
+import VoteResult from '../container/vote/VoteResult';
 import { IN_INIT, IN_PROGRESS, IN_SUCCESS, IN_FAIL } from '../constant/progress';
 
 function VoteDetail({
@@ -29,9 +30,18 @@ function VoteDetail({
       {
         progressStatus === IN_SUCCESS ?
           !voteInfo.isViewerVote ?
-            <VoteCasting voteId={voteId} voteItems={voteInfo.voteItems} setVoteInfo={setVoteInfo} setProgressStatus={setProgressStatus} voteService={voteService} />
+            <VoteCasting
+              voteId={voteId}
+              voteItems={voteInfo.voteItems}
+              setVoteInfo={setVoteInfo}
+              setProgressStatus={setProgressStatus}
+              voteService={voteService}
+            />
             :
-            <div>결과보기</div>
+            <VoteResult
+              voteItems={voteInfo.voteItems}
+              voteService={voteService}
+            />
         : 
           progressStatus === IN_PROGRESS ?
           <div>Loading...</div>
