@@ -1,12 +1,6 @@
 const express = require('express');
 const admin = require('firebase-admin');
 const cors = require('cors');
-const CustomDate = require('../util/CustomDate');
-
-const checkVoteInProgress = (startTime, endTime) => {
-  const curTimeYYYYMMDDHHMM = CustomDate.getCurrentTimeYYYYMMDDHHMM();
-  return new Date(startTime) - new Date(curTimeYYYYMMDDHHMM) <= 0 && new Date(endTime) - new Date(curTimeYYYYMMDDHHMM) >= 0;
-}
 
 module.exports = (db) => {
   const app = express();
@@ -18,8 +12,8 @@ module.exports = (db) => {
     const decodedToken = await admin.auth().verifyIdToken(req.headers.authorization);
     if (decodedToken) {
       req.user = decodedToken;
-      next();
     }
+    next();
   });
 
   app.get('/all', async (req, res) => {
@@ -28,22 +22,21 @@ module.exports = (db) => {
 
     snapshot.forEach((doc) => {
       const result = doc.data();
-      const inProgress = checkVoteInProgress(result.startTime, result.endTime);
 
       data.push({
         id: doc.id,
         ...result,
         isViewerWrite: result.writer.uid === req.user.uid,
-        inProgress
       })
     });
 
     for (const vote of data) {
-      const promiseVoteItems = vote.voteItems.map((voteItemId) => db.collection('voteItems').doc(voteItemId).get())
+      const promiseVoteItems = vote.voteItems.map((voteItemId) => db.collection('voteItems').doc(voteItemId).get());
       const voteItemDocs = await Promise.all(promiseVoteItems);
       const isViwerVotes = voteItemDocs.map((voteItemDoc) => voteItemDoc.data().votedUser.some((userId) => userId === req.user.uid ));
       vote.isViewerVote = isViwerVotes.some((isViwerVote) => isViwerVote);
     }
+
     res.send(data);
   });
 
@@ -53,12 +46,10 @@ module.exports = (db) => {
       res.send([]);
     } else {
       const data = doc.data();
-      const inProgress = checkVoteInProgress(data.startTime, data.endTime);
       const result = {
         id: doc.id,
         ...data,
         isViewerWrite: data.writer.uid === req.user.uid,
-        inProgress
       };
 
       const promiseVoteItems = data.voteItems.map((voteItemId) => db.collection('voteItems').doc(voteItemId).get());

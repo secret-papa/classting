@@ -1,5 +1,5 @@
 class Validator {
-  static isNum() {
+  static isNum(target) {
     return typeof target === 'number';
   }
 
@@ -20,11 +20,11 @@ class Validator {
   }
 
   static isArrayItemObj(target) {
-    return target.some(value => !this.isObject(value));
+    return !(target.some(value => !this.isObject(value)));
   }
 
   static isArrayItemStr(target) { 
-    return target.some((value) => !this.isStr(value))
+    return !(target.some((value) => !this.isStr(value)))
   }
 
   static checkEmailForm(target) {

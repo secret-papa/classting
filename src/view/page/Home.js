@@ -3,15 +3,11 @@ import LayerPopUp from '../ui/LayerPopUp';
 import VoteCreator from '../container/vote/VoteCreateor';
 import VoteList from '../container/vote/VoteList';
 
-function Home({ authService, voteService }) {
+function Home({ voteService }) {
   const [createVotePopUpStatus, setCreateVotePopUpStatus] = useState(false);
 
   const closeCreateVotePopUp = () => setCreateVotePopUpStatus(false);
   const openCreateVotePopUp = () => setCreateVotePopUpStatus(true);
-
-  const handleClickSignOut = () => {
-    authService.signOut();
-  };
 
   return (
     <div>

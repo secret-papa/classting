@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from "react-router-dom";
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Progress from './ui/Progress';
 import Button from '@material-ui/core/Button';
 import Home from './page/Home';
@@ -33,9 +32,18 @@ function App({ service }) {
         isLoadedUser ?
           <Switch>
             <Route path={'/'} exact>
-              { user ? <Home authService={service.auth} voteService={service.vote} /> : <Redirect to="/signIn" /> }
+              {
+                user ?
+                  <Home authService={service.auth} voteService={service.vote} />
+                :
+                  <Redirect to="/signIn" />
+                  }
             </Route>
-            <Route path={'/vote/:voteId'} render={(props) => <VoteDetail {...props} voteService={service.vote} />} />
+            <Route
+              path={'/vote/:voteId'}
+              render={(props) => user ? <VoteDetail {...props} voteService={service.vote} /> : <Redirect to="/signIn" />}
+              exact
+            />
             <Route path={'/signIn'}>
               { !user ? <SignIn authService={service.auth} /> : <Redirect to="/" />  }
             </Route>

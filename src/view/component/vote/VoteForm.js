@@ -127,7 +127,7 @@ function VoteForm({
   }
 
   const validateStartTime = (startTime, endTime) => {
-    if (new Date(startTime) - new Date(endTime) > 0) {
+    if (!(startTime && new Date(startTime) - new Date(endTime) <= 0)) {
       setValidator((validator) => ({
         ...validator,
         startTime: false
@@ -143,7 +143,7 @@ function VoteForm({
   }
 
   const validateEndTime = (startTime, endTime) => {
-    if (new Date(endTime) - new Date(startTime) < 0) {
+    if (!(endTime && new Date(endTime) - new Date(startTime) >= 0)) {
       setValidator((validator) => ({
         ...validator,
         endTime: false

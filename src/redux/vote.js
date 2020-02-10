@@ -39,7 +39,7 @@ export default function (state = initialState, action) {
     case ADD_VOTE: {
       return {
         ...state,
-        votes: state.votes.concat(action.payload)
+        votes: [action.payload].concat(state.votes)
       }
     }
     case SET_VOTES: {

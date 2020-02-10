@@ -5,7 +5,7 @@ class FirebaseVoteAPI extends VoteAPI {
   constructor({ userRepo }) {
     super();
     this.http = axios.create({
-      baseURL: 'http://localhost:5000/classting-c59dd/us-central1/vote',
+      baseURL: 'https://asia-east2-classting-c59dd.cloudfunctions.net/vote',
       timeout: 5000
     });
     this.userRepo = userRepo;
