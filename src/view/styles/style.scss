@@ -2,4 +2,11 @@
 
 #main {
   min-height: 100vh;
+
+  .main_progress {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
 }

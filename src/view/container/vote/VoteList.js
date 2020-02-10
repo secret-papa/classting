@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import classnames from 'classnames/bind';
 import { setVotesAction } from '../../../redux/vote';
 import VoteListItem from '../../component/vote/VoteListItem';
 import { IN_INIT, IN_PROGRESS, IN_SUCCESS, IN_FAIL} from '../../constant/progress';
+import style from './VoteList.scss';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+
+
+const cx = classnames.bind(style);
 
 function VoteList({
-  voteService
+  voteService,
+  openCreatorVoteForm
 }) {
   const [progressStatus, setProgressStatus] = useState(IN_INIT);
   const { votes } = useSelector((state) => state.vote);
   const dispatch = useDispatch();
+
+  const handleClickCreateVote = () => {
+    openCreatorVoteForm()
+  };
 
   useEffect(() => {
     const componentDidMount = async () => {
@@ -20,35 +32,40 @@ function VoteList({
     }
     componentDidMount();
   }, [ dispatch, voteService ]);
+
   return (
-    <div>
-      <h1>투표 리스트</h1>
+    <div className={cx('vote_list_container')}>
       {
         progressStatus === IN_SUCCESS ? 
         <>
-            {
-              !!votes.length &&
-              <ul>
-                {
-                  votes.map(({ id, title, startTime, endTime, voteItems, writer, isViewerWrite, isViewerVote, inProgress }) => (
-                    <li key={id}>
-                      <VoteListItem
-                        id={id}
-                        title={title}
-                        startTime={startTime}
-                        endTime={endTime}
-                        writer={writer}
-                        voteItems={voteItems}
-                        isViewerWrite={isViewerWrite}
-                        isViewerVote={isViewerVote}
-                        inProgress={inProgress}
-                        voteService={voteService}
-                      />
-                    </li>
-                  ))
-                }
-              </ul>
-            }
+          <div className={cx('vote_add_button')}>
+              <Fab color="secondary" aria-label="add" size='small' onClick={handleClickCreateVote}>
+              <AddIcon />
+            </Fab>
+          </div>
+          {
+            !!votes.length &&
+              <ul className={cx('vote_list')}>
+              {
+                votes.map(({ id, title, startTime, endTime, voteItems, writer, isViewerWrite, isViewerVote, inProgress }) => (
+                  <li key={id} className={cx('vote_list_item')}>
+                    <VoteListItem
+                      id={id}
+                      title={title}
+                      startTime={startTime}
+                      endTime={endTime}
+                      writer={writer}
+                      voteItems={voteItems}
+                      isViewerWrite={isViewerWrite}
+                      isViewerVote={isViewerVote}
+                      inProgress={inProgress}
+                      voteService={voteService}
+                    />
+                  </li>
+                ))
+              }
+            </ul>
+          }
         </>
         :
         progressStatus === IN_PROGRESS ?

@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import LayerPopUp from '../ui/LayerPopUp';
 import VoteCreator from '../container/vote/VoteCreateor';
 import VoteList from '../container/vote/VoteList';
@@ -9,26 +13,28 @@ function Home({ authService, voteService }) {
   const closeCreateVotePopUp = () => setCreateVotePopUpStatus(false);
   const openCreateVotePopUp = () => setCreateVotePopUpStatus(true);
 
-  const handleClickCreateVote = () => {
-    openCreateVotePopUp()
-  };
-
   const handleClickSignOut = () => {
     authService.signOut();
   };
 
   return (
     <div>
-      <button type='button' onClick={handleClickCreateVote}>투표 만들기</button>
-      <button type='button' onClick={handleClickSignOut}>로그아웃</button>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" style={{flexGrow: 1}}>
+            Classting
+          </Typography>
+          <Button color='inherit' onClick={handleClickSignOut}>로그아웃</Button>
+        </Toolbar>
+      </AppBar>
       {
         createVotePopUpStatus && (
-          <LayerPopUp closePopUp={closeCreateVotePopUp}>
+          <LayerPopUp>
             <VoteCreator closeForm={closeCreateVotePopUp} voteService={voteService} />
           </LayerPopUp>
         )
       }
-      <VoteList voteService={voteService} />
+      <VoteList voteService={voteService} openCreatorVoteForm={openCreateVotePopUp} />
     </div>
   )
 }

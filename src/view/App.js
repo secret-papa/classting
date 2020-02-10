@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from "react-router-dom";
-import classnames from 'classnames/bind';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Home from './page/Home';
 import NotFound from './page/error/NotFound';
 import SignIn from './page/auth/SignIn';
@@ -16,7 +16,7 @@ function App({ service }) {
   useEffect(() => {
     service.auth.authStateChange(createSetUserAction);
   }, [ service.auth ]);
-  
+
   return (
     <div id={'main'}>
       {
@@ -34,7 +34,9 @@ function App({ service }) {
           </Route>
         </Switch>
         :
-        <div>로딩중...</div>
+        <div className={'main_progress'}>
+          <CircularProgress />
+        </div>
       }
     </div>
   )

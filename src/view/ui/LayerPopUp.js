@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-function LayerPopUp({children }) {
+function LayerPopUp({ children }) {
   return (
     ReactDOM.createPortal(
       <div>

@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
+import classnames from 'classnames/bind';
+import Button from '@material-ui/core/Button';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import LayerPopUp from '../../ui/LayerPopUp'
 import VoteUpdator from '../../container/vote/VoteUpdator';
 import { deleteVoteAction } from '../../../redux/vote';
+import style from './VoteListItem.scss';
+
+const cx = classnames.bind(style);
 
 function VoteListItem({
   id,
@@ -37,24 +42,25 @@ function VoteListItem({
   }
 
   return (
-    <div>
-      {title}
-      {startTime.split("T").join(' ')}
-      {endTime.split("T").join(' ')}
-      {writer.email}
-      {inProgress ? '진행 중' : '종료 됨'}
+    <>
+      <span className={cx('vote_item')}>{title}</span>
+      <span className={cx('vote_item')}>{startTime.split("T").join(' ')} ~ {endTime.split("T").join(' ')}</span>
+      <span className={cx('vote_item')}>{writer.email}</span>
+      <span className={cx('vote_item')}>{inProgress ? '진행 중' : '종료 됨'}</span>
+      {
+        inProgress &&
+        <Button>
+          <Link to={`/vote/${id}`}>
+            {isViewerVote ? '결과 보기' : '투표 하기'}
+          </Link>
+        </Button>
+      }
       {
         isViewerWrite &&
         <>
-          <button type='button' onClick={handleClickUpdate}>수정</button>
-          <button type='button' onClick={handleClickDelete}>삭제</button>
+          <Button color="primary" onClick={handleClickUpdate}>수정</Button>
+          <Button color="secondary" onClick={handleClickDelete}>삭제</Button>
         </>
-      }
-      {
-        inProgress &&
-        <Link to={`/vote/${id}`}>
-          { isViewerVote ? '결과 보기' : '투표 하기' }
-        </Link>
       }
       {
         updateVotePopUpStatus &&
@@ -70,7 +76,7 @@ function VoteListItem({
           />
         </LayerPopUp>
       }
-    </div>
+    </>
   )
 }
 

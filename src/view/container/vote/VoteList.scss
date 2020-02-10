@@ -1,0 +1,11 @@
+.vote_list_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px 20px 0;
+
+  .vote_add_button {
+    margin-bottom: 20px;
+  }
+}
