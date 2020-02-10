@@ -1,0 +1,9 @@
+.vote_item_form {
+  display: flex;
+  align-items: center;
+
+  .vote_item_form_vlaue {
+    flex: 1;
+    margin-right: 8px;
+  }
+}

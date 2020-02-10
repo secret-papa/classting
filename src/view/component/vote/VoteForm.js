@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import Button from '@material-ui/core/Button';
 import classnames from 'classnames/bind';
 import VoteItemForm from './VoteItemForm';
 import { IN_SUCCESS, IN_FAIL, IN_PROGRESS } from '../../constant/progress';
+import TextField from '@material-ui/core/TextField';
 import style from './VoteForm.scss';
 
 const cx = classnames.bind(style);
@@ -200,18 +202,45 @@ function VoteForm({
     <div>
       {
         progressStatus === IN_SUCCESS ?
-        <div>
-          <label>제목</label>
-          <input name='title' value={title} onChange={handleChangeTitle} />
-          {!validator.title && <span>2글자 ~ 30글자</span>}
-          <label>시작 시간</label>
-          <input name='startTime' type='datetime-local' value={startTime} onChange={handleChangeStartTime} />
-          {!validator.startTime && <span>종료 시간 보다 이른 시간</span>}
-          <label>종료 시간</label>
-          <input name='endTime' type='datetime-local' value={endTime} onChange={handleChangeEndTime} />
-          {!validator.endTime && <span>시작 시간 보다 늦은 시간</span>}
-          <div>
-            <ul>
+        <div className={cx('vote_form')}>
+          <TextField
+            className={cx('vote_form_item')}
+            label='제목' 
+            name='title'
+            value={title}
+            error={!validator.title}
+            helperText={'최소 2글자에서 최대 30글자입니다.'}
+            onChange={handleChangeTitle}
+          />
+          <TextField
+            className={cx('vote_form_item')}
+            label="시작 시간"
+            type="datetime-local"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            name='startTime'
+            value={startTime}
+            error={!validator.startTime}
+            helperText={'종료 시간 보다 늦은 시간 선택 불가'}
+            onChange={handleChangeStartTime}
+          />
+          <TextField
+            className={cx('vote_form_item')}
+            label="종료 시간"
+            type="datetime-local"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            name='endTime'
+            value={endTime}
+            error={!validator.endTime}
+            helperText={'시작 시간 보다 이른 시간 선택 불가'}
+            onChange={handleChangeEndTime}
+          />
+          <div className={cx('vote_form_item_container')}>
+            <p className={cx('vote_form_item_title')}>항목</p>
+            <ul className={cx('vote_form_item_list')}>
               {
                 voteItems.map(({ id, value }, idx) => (
                   <li key={idx} >
@@ -227,22 +256,35 @@ function VoteForm({
               }
             </ul>
           </div>
-          <div>
-            <input value={addtionalVoteItemValue} onChange={handleChangeVoteItemValue} />
-            <button type='button' onClick={addVoteItem}>항목 추가</button>
-            {
-              !validator.votItemSize && <span>항목은 3개 이상</span>
-            }
-            {
-              !validator.voteItemValue && <span>최소 2글자 최대 10글자</span>
-            }
-            {
-              !validator.voteItemUnique && <span>중복된 값 사용 불가</span>
-            }
+          <div className={cx('vote_form_vote_item_contorl')}>
+            <TextField
+              className={cx('vote_itme_control_add')}
+              error={!validator.title}
+              value={addtionalVoteItemValue}
+              error={
+                !validator.voteItemValue ||
+                !validator.voteItemUnique ||
+                !validator.votItemSize
+              }
+              helperText={
+                !validator.voteItemValue ?
+                  '최소 2글자 최대 10글자'
+                :
+                  !validator.voteItemUnique ?
+                    '중복된 값 사용 불가'
+                  :
+                    !validator.votItemSize ?
+                      '항목은 3개 이상'
+                    :
+                      ''
+              }
+              onChange={handleChangeVoteItemValue}
+            />
+            <Button onClick={addVoteItem}>항목 추가</Button>
           </div>
-          <div>
-            <button type='button' onClick={handleClickConfirm}>확인</button>
-            <button type='button' onClick={handleClickClose}>닫기</button>
+          <div className={cx('vote_form_control')}>
+            <Button color="primary" onClick={handleClickConfirm}>확인</Button>
+            <Button onClick={handleClickClose}>닫기</Button>
           </div>
         </div>
         :

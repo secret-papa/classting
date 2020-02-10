@@ -1,4 +1,10 @@
 import React, { useState } from 'react';
+import classnames from 'classnames/bind';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import style from './VoteItemForm.scss';
+
+const cx = classnames.bind(style);
 
 function VoteItemFrom({
   order,
@@ -42,26 +48,27 @@ function VoteItemFrom({
   }
 
   return (
-    <>
+    <div className={cx('vote_item_form')}>
       {
         isUpdate ?
         <>
-          <input value={updateValue} onChange={handleChangeUpdateValue} />
-          <button type='button' onClick={handleClickConfirmValue}>확인</button>
-          {
-            !valueValidator && <span>최소 2글자 최대 10글자</span>
-          }
+          <TextField
+            error={!valueValidator}
+            helperText={'최소 2글자에서 최대 10글자입니다.'}
+            value={updateValue}
+            onChange={handleChangeUpdateValue}
+          />
+          <Button onClick={handleClickConfirmValue}>확인</Button>
         </>
         :
         <>
-          <p>{updateValue}</p>
-          <button type='button' onClick={handleClickActiveUpdate}>항목 수정</button>
-          <button type='button' onClick={handleClickDeleteVote}>항목 삭제</button>
+          <p className={cx('vote_item_form_vlaue')} >{updateValue}</p>
+          <Button onClick={handleClickActiveUpdate}>항목 수정</Button>
+          <Button color='secondary' onClick={handleClickDeleteVote}>항목 삭제</Button>
         </>
         
       }
-    </>
-    
+    </div>
   )
 }
 
