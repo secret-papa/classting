@@ -69,7 +69,7 @@ function VoteList({
         </>
         :
         progressStatus === IN_PROGRESS ?
-          <div>loading...</div>
+            <div>Loading...</div>
           :
           progressStatus === IN_FAIL &&
             <div>Fail...</div>

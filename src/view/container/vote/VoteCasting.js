@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import classnames from 'classnames/bind';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Checkbox from '@material-ui/core/Checkbox';
 import { IN_INIT, IN_PROGRESS, IN_SUCCESS, IN_FAIL } from '../../constant/progress';
 import { castVoteAction } from '../../../redux/vote';
+import style from './VoteCasting.scss';
+
+const cx = classnames.bind(style);
 
 function VoteCasting({
   voteId,
@@ -49,35 +59,43 @@ function VoteCasting({
   }, [ voteItems, voteService ]);
 
   return (
-    <div>
-      투표하기
+    <div className={cx('vote_cast_container')} >
       {
         castProgressStatus === IN_SUCCESS ?
-        <>
+        <div  className={cx('vote_coast_list_wrp')}>
             {
               !!items.length &&
-              <ul>
+              <List>
                 {
-                  items.map(({ id, value, checked }) => (
-                    <li key={id}>
-                      <input type='checkbox' id={id} value={id} checked={checked} onChange={() => { handleChagneCheck(id) }} />
-                      <label htmlFor={id}>{value}</label>
-                    </li>
+                  items.map(({ id, value, checked })=> (
+                    <ListItem key={id} dense button onClick={() => { handleChagneCheck(id) }}>
+                      <ListItemIcon>
+                        <Checkbox
+                          edge="start"
+                          checked={checked}
+                          tabIndex={-1}
+                          disableRipple
+                        />
+                      </ListItemIcon>
+                      <ListItemText id={id} primary={value} />
+                    </ListItem>
                   ))
                 }
-              </ul>
+                
+              </List>
             }
-            <button type='button' onClick={handleClickCast}>투표하기</button>
-            <Link to='/'>취소</Link>
-        </>
+            <Button color='primary' onClick={handleClickCast}>투표하기</Button>
+            <Button>
+              <Link to='/'>취소</Link>
+            </Button>
+        </div>
         :
         castProgressStatus === IN_PROGRESS ?
-          <div>Casting...</div>
+          <div>Loading...</div>
           :
           castProgressStatus === IN_FAIL && 
             <div>Fail...</div>
       }
-      
     </div>
   )
 }

@@ -98,7 +98,7 @@ function SignIn({ authService }) {
   return (
     <div className={`${cx('sign_container')}`}>
       <div className={`${cx('sign_box')}`}>
-        <h1 className={`${cx('sign_title')}`}>Vote Classting</h1>
+        <h1 className={`${cx('sign_title')}`}>Sign</h1>
         <TextField
           className={`${cx('email_form')}`}
           type='email'

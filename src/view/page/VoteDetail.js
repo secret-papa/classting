@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Progress from '../ui/Progress';
 import VoteCasting from '../container/vote/VoteCasting';
 import VoteResult from '../container/vote/VoteResult';
 import { IN_INIT, IN_PROGRESS, IN_SUCCESS, IN_FAIL } from '../constant/progress';
@@ -44,7 +45,7 @@ function VoteDetail({
             />
         : 
           progressStatus === IN_PROGRESS ?
-          <div>Loading...</div>
+            <Progress />
           :
             progressStatus === IN_FAIL &&
             <div>fail...</div>
