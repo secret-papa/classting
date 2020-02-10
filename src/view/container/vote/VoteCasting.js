@@ -26,7 +26,7 @@ function VoteCasting({
     if (isSelectItem) {
       setProgressStatus(IN_PROGRESS);
       const { id } = items.filter(({ checked }) => checked)[0];
-      const result = await voteService.castVote(id);
+      await voteService.castVote(id);
       setVoteInfo((voteInfo) => ({
         ...voteInfo,
         isViewerVote: true
@@ -46,7 +46,7 @@ function VoteCasting({
       setCastProgressStatus(IN_SUCCESS);
     };
     componentDidMount();
-  }, []);
+  }, [ voteItems, voteService ]);
 
   return (
     <div>

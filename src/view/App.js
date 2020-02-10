@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from "react-router-dom";
+import classnames from 'classnames/bind';
 import Home from './page/Home';
 import NotFound from './page/error/NotFound';
 import SignIn from './page/auth/SignIn';
 import VoteDetail from './page/VoteDetail';
 import { createSetUserAction } from '../redux/user';
-import { useSelectUser } from './hook/redux/user'
+import { useSelectUser } from './hook/redux/user';
+import './styles/style.scss';
 
 function App({ service }) {
 
@@ -16,7 +18,7 @@ function App({ service }) {
   }, [ service.auth ]);
   
   return (
-    <div>
+    <div id={'main'}>
       {
         isLoadedUser ?
         <Switch>

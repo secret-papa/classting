@@ -23,7 +23,7 @@ function VoteDetail({
     };
 
     componentDidMount();
-  }, []);
+  }, [ voteId, voteService ]);
 
   return (
     <div>

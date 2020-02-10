@@ -8,6 +8,28 @@ class FirebaseAuthentication extends Authentication {
     this.store = store;
   }
 
+  _createErrorForm(e) {
+    if (e.code === 'auth/invalid-email') {
+      return {
+        success: false,
+        code: 'auth/emailError',
+        message: e.message
+      }
+    } else if (e.code === 'auth/wrong-password') {
+      return {
+        success: false,
+        code: 'auth/passwordError',
+        message: e.message
+      }
+    } else {
+      return {
+        success: false,
+        code: 'auth/etcError',
+        message: e.message
+      };
+    }
+  }
+
   async _getUserToken() {
     return await this.auth().currentUser.getIdToken();
   }
@@ -17,8 +39,29 @@ class FirebaseAuthentication extends Authentication {
     return result.user;
   }
 
-  signInEmail(email, pwd) {
-    this.auth().createUserWithEmailAndPassword(email, pwd)
+  async signUpEmail(email, pwd) {
+    try {
+      const data = await this.auth().createUserWithEmailAndPassword(email, pwd);
+      return {
+        success: true,
+        data
+      };
+    } catch(e) {
+      return this._createErrorForm(e);
+    }
+    
+  }
+
+  async signInEmail(email, pwd) {
+    try {
+      const data = await this.auth().signInWithEmailAndPassword(email, pwd)
+      return {
+        success: true,
+        data
+      };
+    } catch(e) {
+      return this._createErrorForm(e);
+    }
   }
 
   signOut() {

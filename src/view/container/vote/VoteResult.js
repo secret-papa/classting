@@ -24,7 +24,7 @@ function VoteResult({
     };
     componentDidMount();
 
-  }, []);
+  }, [ voteItems, voteService ]);
 
   return (
     <div>

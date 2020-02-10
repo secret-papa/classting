@@ -7,6 +7,10 @@ class AuthenticationService {
     return this.authAPI.signInWithGoogle();
   }
 
+  signUpEmail(email, pwd) {
+    return this.authAPI.signUpEmail(email, pwd);
+  }
+
   signInEmail(email, pwd) {
     return this.authAPI.signInEmail(email, pwd);
   }
