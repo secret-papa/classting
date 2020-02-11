@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from "react-router-dom";
-import Progress from './ui/Progress';
 import Button from '@material-ui/core/Button';
+
 import Home from './page/Home';
-import Header from './component/layout/Header'
-import NotFound from './page/error/NotFound';
-import SignIn from './page/auth/SignIn';
 import VoteDetail from './page/VoteDetail';
-import { createSetUserAction } from '../redux/user';
+import Progress from './ui/Progress';
+import Header from './component/layout/Header'
 import { useSelectUser } from './hook/redux/user';
+import SignIn from './page/auth/SignIn';
+import NotFound from './page/error/NotFound';
+import { createSetUserAction } from '../redux/user';
 import './styles/style.scss';
 
 function App({ service }) {
-
   const { isLoadedUser, user } = useSelectUser();
 
   const handleClickSignOut = () => {
@@ -26,12 +26,12 @@ function App({ service }) {
   return (
     <div id={'main'}>
       <Header>
-        {user && <Button color='inherit' onClick={handleClickSignOut}>로그아웃</Button>}
+        { user && <Button color='inherit' onClick={handleClickSignOut}>로그아웃</Button> }
       </Header>
       {
         isLoadedUser ?
           <Switch>
-            <Route path={'/'} exact>
+            <Route exact path={'/'}>
               {
                 user ?
                   <Home authService={service.auth} voteService={service.vote} />
@@ -41,7 +41,12 @@ function App({ service }) {
             </Route>
             <Route
               path={'/vote/:voteId'}
-              render={(props) => user ? <VoteDetail {...props} voteService={service.vote} /> : <Redirect to="/signIn" />}
+              render={
+                (props) => user ?
+                  <VoteDetail {...props} voteService={service.vote} />
+                :
+                  <Redirect to="/signIn" />
+              }
               exact
             />
             <Route path={'/signIn'}>

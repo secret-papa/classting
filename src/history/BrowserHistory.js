@@ -1,4 +1,5 @@
 import { createBrowserHistory } from 'history';
+
 import History from './index';
 
 class BrowserHistory extends History {
@@ -6,6 +7,7 @@ class BrowserHistory extends History {
     super();
     this.history = null;
   }
+
   createHistory() {
     this.history = createBrowserHistory();
     return this.history;
@@ -13,10 +15,6 @@ class BrowserHistory extends History {
 
   push(path) {
     this.history.push(path)
-  }
-
-  getHistory() {
-    return this.history;
   }
 }
 

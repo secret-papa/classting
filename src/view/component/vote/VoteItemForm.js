@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
 import classnames from 'classnames/bind';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+
 import style from './VoteItemForm.scss';
 
 const cx = classnames.bind(style);

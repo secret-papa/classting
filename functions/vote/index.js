@@ -16,6 +16,33 @@ module.exports = (db) => {
     next();
   });
 
+  app.post('/', async (req, res) => {
+    const {
+      title,
+      startTime,
+      endTime,
+      voteItems
+    } = req.body.data;
+
+    const voteRef = await Promise.all(voteItems.map(({ value }) => db.collection('voteItems').add({
+      value,
+      votedUser: []
+    })));
+
+    const votesRef = await db.collection('votes').add({
+      title,
+      startTime,
+      endTime,
+      voteItems: voteRef.map(({ id }) => id),
+      writer: {
+        email: req.user.email,
+        uid: req.user.uid
+      }
+    });
+
+    res.send(votesRef.id);
+  });
+
   app.get('/all', async (req, res) => {
     const snapshot = await db.collection('votes').get();
     const data = [];
@@ -90,17 +117,13 @@ module.exports = (db) => {
     res.send(req.params.voteId);
   });
 
-  app.get('/items/:id', async (req, res) => {
-    const doc = await db.collection('voteItems').doc(req.params.id).get();
-    if (!doc.exists) {
-      res.send([]);
-    } else {
-      const data = {
-        id: doc.id,
-        ...doc.data()
-      };
-      res.send(data);
-    }
+  app.put('/cast/:itemId', async (req, res) => {
+    const itemId = req.params.itemId;
+    await db.collection('voteItems').doc(itemId).update({
+      votedUser: admin.firestore.FieldValue.arrayUnion(req.user.uid)
+    });
+
+    res.send(itemId);
   });
 
   app.delete('/:voteId', async (req, res) => {
@@ -113,40 +136,17 @@ module.exports = (db) => {
     res.send(req.params.voteId);
   });
 
-  app.post('/', async (req, res) => {
-    const {
-      title,
-      startTime,
-      endTime,
-      voteItems
-    } = req.body.data;
-
-    const voteRef = await Promise.all(voteItems.map(({ value }) => db.collection('voteItems').add({
-      value,
-      votedUser: []
-    })));
-
-    const votesRef = await db.collection('votes').add({
-      title,
-      startTime,
-      endTime,
-      voteItems: voteRef.map(({ id }) => id),
-      writer: {
-        email: req.user.email,
-        uid: req.user.uid
-      }
-    });
-
-    res.send(votesRef.id);
-  });
-
-  app.put('/cast/:itemId', async (req, res) => {
-    const itemId = req.params.itemId;
-    await db.collection('voteItems').doc(itemId).update({
-      votedUser: admin.firestore.FieldValue.arrayUnion(req.user.uid)
-    });
-
-    res.send(itemId);
+  app.get('/items/:id', async (req, res) => {
+    const doc = await db.collection('voteItems').doc(req.params.id).get();
+    if (!doc.exists) {
+      res.send([]);
+    } else {
+      const data = {
+        id: doc.id,
+        ...doc.data()
+      };
+      res.send(data);
+    }
   });
 
   return app;

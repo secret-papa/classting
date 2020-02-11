@@ -6,8 +6,6 @@ import { Router } from 'react-router-dom';
 import Configure from './config'
 import firebaseConfing from './env/firebase';
 import BrowserHistory from './history/BrowserHistory';
-import FirebaseAuth from './infrastructure/auth/FirebaseAuth';
-import FirebaseVote from './infrastructure/vote/FirebaseVote';
 import FirebasePlatfrom from './platform/FirebasePlatform';
 import UserRepository from './repository/UserRepository';
 import AuthenticationService from './service/AuthenticationService';
@@ -15,6 +13,8 @@ import VoteService from './service/VoteService';
 import WebStorage from './storage/WebStorage';
 import ReduxStore from './store/ReduxStore';
 import App from './view/App';
+import FirebaseAuth from './infrastructure/auth/FirebaseAuth';
+import FirebaseVote from './infrastructure/vote/FirebaseVote';
 
 const { platform, history, store } = Configure.init({
   platform: new FirebasePlatfrom(firebaseConfing),

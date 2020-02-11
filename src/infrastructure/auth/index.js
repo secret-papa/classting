@@ -1,5 +1,5 @@
 class Authentication {
-  signInWithGoogle() {
+  authStateChange() {
     throw new Error('must be override');
   }
 
@@ -7,7 +7,15 @@ class Authentication {
     throw new Error('must be override');
   }
 
+  signInWithGoogle() {
+    throw new Error('must be override');
+  }
+
   signOut() {
+    throw new Error('must be override');
+  }
+
+  signUpEmail() {
     throw new Error('must be override');
   }
 }

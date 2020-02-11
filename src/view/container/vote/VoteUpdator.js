@@ -1,16 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import VoteForm from '../../component/vote/VoteForm';
-import useVoteForm from '../../hook/vote';
-import { updateVoteAction } from '../../../redux/vote';
+
 import { IN_INIT, IN_SUCCESS, IN_PROGRESS } from '../../constant/progress';
+import useVoteForm from '../../hook/vote';
+import VoteForm from '../../component/vote/VoteForm';
+import { updateVoteAction } from '../../../redux/vote';
 
 function VoteUpdator({
-  voteId,
-  title: initTitle,
-  startTime: initStartTime,
   endTime: initEndTime,
+  startTime: initStartTime,
+  title: initTitle,
   voteItems: initVoteItems,
+  voteId,
   voteService,
   closeForm
 }) {
@@ -18,17 +19,17 @@ function VoteUpdator({
   const dispatch = useDispatch();
   const [progressStatus, setProgressStatus] = useState(IN_INIT);
   const [{
-    title,
+    endTime,
     startTime,
-    endTime
+    title
   }, 
   voteItems, 
   changeVoteForm,
   setVoteItems
   ] = useVoteForm({
-    title: initTitle,
+    endTime: initEndTime,
     startTime: initStartTime,
-    endTime: initEndTime
+    title: initTitle
   });
 
   const updateVoteInfo = async (voteInfo) => {

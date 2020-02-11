@@ -1,5 +1,6 @@
 import * as firebase from "firebase/app";
 import auth from 'firebase/auth';
+
 import Platform from './index';
 
 class FirebasePlatform extends Platform {

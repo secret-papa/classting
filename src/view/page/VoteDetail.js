@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
+
+import { IN_INIT, IN_PROGRESS, IN_SUCCESS, IN_FAIL } from '../constant/progress';
 import Progress from '../ui/Progress';
 import VoteCasting from '../container/vote/VoteCasting';
 import VoteResult from '../container/vote/VoteResult';
-import { IN_INIT, IN_PROGRESS, IN_SUCCESS, IN_FAIL } from '../constant/progress';
 
 function VoteDetail({
-  voteService,
   match: {
     params: {
       voteId
     }
-  }
+  },
+  voteService
 }) {
   const [progressStatus, setProgressStatus] = useState(IN_INIT);
   const [voteInfo, setVoteInfo] = useState({});
@@ -34,9 +35,9 @@ function VoteDetail({
             <VoteCasting
               voteId={voteId}
               voteItems={voteInfo.voteItems}
-              setVoteInfo={setVoteInfo}
-              setProgressStatus={setProgressStatus}
               voteService={voteService}
+              setProgressStatus={setProgressStatus}
+              setVoteInfo={setVoteInfo}
             />
             :
             <VoteResult

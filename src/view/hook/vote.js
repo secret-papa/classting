@@ -1,20 +1,21 @@
 import { useState } from 'react';
+
 import CustomDate from '../../util/CustomDate';
 
 const initFormState = () => {
   const date = new Date();
   return {
-    title: '',
-    startTime: CustomDate.getCurrentTimeYYYYMMDDHHMM(date),
     endTime: CustomDate.getCurrentTimeYYYYMMDDHHMM(date),
+    startTime: CustomDate.getCurrentTimeYYYYMMDDHHMM(date),
+    title: '',
   };
 }
 
 export default function useVoteForm(initForm = initFormState()) {
   const [voteForm, setVoteForm] = useState({
-    title: initForm.title,
+    endTime: initForm.endTime,
     startTime: initForm.startTime,
-    endTime: initForm.endTime
+    title: initForm.title
   });
 
   const [voteItems, setVoteItems] = useState([]);

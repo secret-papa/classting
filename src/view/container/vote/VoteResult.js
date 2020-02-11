@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import classnames from 'classnames/bind';
-import Progress from '../../ui/Progress';
-import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import { IN_INIT, IN_PROGRESS, IN_SUCCESS, IN_FAIL } from '../../constant/progress';
+import classnames from 'classnames/bind';
+import Button from '@material-ui/core/Button';
+
 import style from './VoteResult.scss';
+import { IN_INIT, IN_PROGRESS, IN_SUCCESS, IN_FAIL } from '../../constant/progress';
+import Progress from '../../ui/Progress';
 
 const cx = classnames.bind(style);
 
@@ -29,7 +30,6 @@ function VoteResult({
       setResultProgressStatus(IN_SUCCESS);
     };
     componentDidMount();
-
   }, [ voteItems, voteService ]);
 
   return (
@@ -47,9 +47,12 @@ function VoteResult({
                         <p className={cx('result_item_value')}>{value}</p>
                       </div>
                       <div className={cx('result_item_proggress')}>
-                        <div className={cx('result_item_proggress_bar')} style={{
-                          width: `${votedUser.length / voteResult.totalCount * 100}%`
-                          }}></div>
+                        <div
+                          className={cx('result_item_proggress_bar')}
+                          style={{
+                            width: `${votedUser.length / voteResult.totalCount * 100}%`
+                          }}>
+                        </div>
                         <div className={cx('result_item_proggress_value')} >{votedUser.length / voteResult.totalCount * 100}% ( {votedUser.length} 표 )</div>
                       </div>
                     </li>

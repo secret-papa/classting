@@ -1,4 +1,5 @@
 import { createStore, combineReducers } from 'redux';
+
 import Store from './index';
 import reducers from '../redux'
 
@@ -7,6 +8,7 @@ class ReduxStore extends Store {
     super();
     this.store = null
   }
+  
   createStore() {
     const rootReducer = combineReducers(reducers);
     this.store = createStore(rootReducer);

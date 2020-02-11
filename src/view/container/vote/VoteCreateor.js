@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import VoteForm from '../../component/vote/VoteForm';
+
+import { IN_PROGRESS, IN_SUCCESS } from '../../constant/progress';
 import useVoteForm from '../../hook/vote';
+import VoteForm from '../../component/vote/VoteForm';
 import { addVoteAction } from '../../../redux/vote';
-import { IN_INIT, IN_PROGRESS, IN_SUCCESS, IN_FAIL} from '../../constant/progress';
 
 function VoteCreator({ closeForm, voteService }) {
-  const [progressStatus, setProgressStatus] = useState(IN_SUCCESS);
   const dispatch = useDispatch();
+  const [progressStatus, setProgressStatus] = useState(IN_SUCCESS);
   const [
     {
-      title,
+      endTime,
       startTime,
-      endTime
+      title
     },
     voteItems,
     changeVoteForm,

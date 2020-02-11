@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import LayerPopUp from '../ui/LayerPopUp';
 import VoteCreator from '../container/vote/VoteCreateor';
 import VoteList from '../container/vote/VoteList';
@@ -14,7 +15,7 @@ function Home({ voteService }) {
       {
         createVotePopUpStatus && (
           <LayerPopUp>
-            <VoteCreator closeForm={closeCreateVotePopUp} voteService={voteService} />
+            <VoteCreator voteService={voteService} closeForm={closeCreateVotePopUp} />
           </LayerPopUp>
         )
       }

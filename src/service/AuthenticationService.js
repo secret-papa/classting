@@ -3,24 +3,24 @@ class AuthenticationService {
     this.authAPI = authAPI;
   }
 
-  signInWithGoogle() {
-    return this.authAPI.signInWithGoogle();
-  }
-
-  signUpEmail(email, pwd) {
-    return this.authAPI.signUpEmail(email, pwd);
+  authStateChange(action) {
+    this.authAPI.authStateChange(action);
   }
 
   signInEmail(email, pwd) {
     return this.authAPI.signInEmail(email, pwd);
   }
 
+  signInWithGoogle() {
+    return this.authAPI.signInWithGoogle();
+  }
+
   signOut() {
     this.authAPI.signOut();
   }
 
-  authStateChange(action) {
-    this.authAPI.authStateChange(action);
+  signUpEmail(email, pwd) {
+    return this.authAPI.signUpEmail(email, pwd);
   }
 }
 

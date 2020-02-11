@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
 import classnames from 'classnames/bind';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+
+import style from './VoteForm.scss';
 import VoteItemForm from './VoteItemForm';
 import { IN_SUCCESS, IN_FAIL, IN_PROGRESS } from '../../constant/progress';
-import TextField from '@material-ui/core/TextField';
-import style from './VoteForm.scss';
 
 const cx = classnames.bind(style);
 
 function VoteForm({
+  endTime,
   progressStatus,
   title, 
   startTime,
-  endTime,
   voteItems,
   changeVoteForm,
-  setVoteItems,
+  closeForm,
   confirmVote,
-  closeForm
+  setVoteItems,
 }) {
   
   const [addtionalVoteItemValue, setAddtionalVoteItemValue] = useState('');
@@ -30,30 +31,14 @@ function VoteForm({
     voteItemUnique: true,
   });
 
-  const validateVoteItemOverlap = () => {
-    if (voteItems.some(({ value }) => value === addtionalVoteItemValue)) {
-      setValidator((validator) => ({
-        ...validator,
-        voteItemUnique: false
-      }));
-      return false;
-    } else {
-      setValidator(() => ({
-        ...validator,
-        voteItemUnique: true
-      }));
-      return true;
-    }
-  }
-
   const addVoteItem = () => {
     if (addtionalVoteItemValue && validator.voteItemValue && validateVoteItemOverlap()) {
       if (voteItems.length > 1) setValidator((validator) => ({
         ...validator,
         votItemSize: true
       }));
-      
-      setVoteItems(voteItems.concat({value: addtionalVoteItemValue}));
+
+      setVoteItems(voteItems.concat({ value: addtionalVoteItemValue }));
       setAddtionalVoteItemValue('');
     }
   }
@@ -174,6 +159,22 @@ function VoteForm({
     }
   }
 
+  const validateVoteItemOverlap = () => {
+    if (voteItems.some(({ value }) => value === addtionalVoteItemValue)) {
+      setValidator((validator) => ({
+        ...validator,
+        voteItemUnique: false
+      }));
+      return false;
+    } else {
+      setValidator(() => ({
+        ...validator,
+        voteItemUnique: true
+      }));
+      return true;
+    }
+  }
+
   const validateVoteItemValue = (value) => {
     if (value && makeValidaeVoteItemValueCondition(value)) {
       setValidator((validator) => ({
@@ -205,44 +206,40 @@ function VoteForm({
         <div className={cx('vote_form')}>
           <TextField
             className={cx('vote_form_item')}
+            error={!validator.title}
+            helperText={'최소 2글자에서 최대 30글자입니다.'}
             label='제목' 
             name='title'
             value={title}
-            error={!validator.title}
-            helperText={'최소 2글자에서 최대 30글자입니다.'}
             onChange={handleChangeTitle}
           />
           <TextField
             className={cx('vote_form_item')}
-            label="시작 시간"
-            type="datetime-local"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            name='startTime'
-            value={startTime}
             error={!validator.startTime}
             helperText={'종료 시간 보다 늦은 시간 선택 불가'}
+            InputLabelProps={{ shrink: true }}
+            label="시작 시간"
+            name='startTime'
+            type="datetime-local"
+            value={startTime}
             onChange={handleChangeStartTime}
           />
           <TextField
             className={cx('vote_form_item')}
-            label="종료 시간"
-            type="datetime-local"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            name='endTime'
-            value={endTime}
             error={!validator.endTime}
             helperText={'시작 시간 보다 이른 시간 선택 불가'}
+            InputLabelProps={{ shrink: true }}
+            label="종료 시간"
+            name='endTime'
+            type="datetime-local"
+            value={endTime}
             onChange={handleChangeEndTime}
           />
           <div className={cx('vote_form_item_container')}>
             <p className={cx('vote_form_item_title')}>항목</p>
             <ul className={cx('vote_form_item_list')}>
               {
-                voteItems.map(({ id, value }, idx) => (
+                voteItems.map(({ value }, idx) => (
                   <li key={idx} >
                     <VoteItemForm
                       order={idx}
@@ -259,8 +256,6 @@ function VoteForm({
           <div className={cx('vote_form_vote_item_contorl')}>
             <TextField
               className={cx('vote_itme_control_add')}
-              error={!validator.title}
-              value={addtionalVoteItemValue}
               error={
                 !validator.voteItemValue ||
                 !validator.voteItemUnique ||
@@ -278,6 +273,7 @@ function VoteForm({
                     :
                       ''
               }
+              value={addtionalVoteItemValue}
               onChange={handleChangeVoteItemValue}
             />
             <Button onClick={addVoteItem}>항목 추가</Button>

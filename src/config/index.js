@@ -1,7 +1,7 @@
 class Configure {
-  constructor({ platform, history, store }) {
-    this.platform = platform;
+  constructor({ history, platform, store }) {
     this.history = history;
+    this.platform = platform;
     this.store = store;
   }
 
@@ -10,9 +10,9 @@ class Configure {
   }
 
   init() {
+    this.history.createHistory();
     this.platform = this.platform.initialize();
     this.store.createStore();
-    this.history.createHistory();
     return this;
   }
 }

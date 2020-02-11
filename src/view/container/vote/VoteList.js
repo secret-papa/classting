@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import classnames from 'classnames/bind';
-import { setVotesAction } from '../../../redux/vote';
-import VoteListItem from '../../component/vote/VoteListItem';
-import { IN_INIT, IN_PROGRESS, IN_SUCCESS, IN_FAIL} from '../../constant/progress';
-import style from './VoteList.scss';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
+import style from './VoteList.scss';
+import { IN_INIT, IN_PROGRESS, IN_SUCCESS, IN_FAIL} from '../../constant/progress';
+import VoteListItem from '../../component/vote/VoteListItem';
+import { setVotesAction } from '../../../redux/vote';
 
 const cx = classnames.bind(style);
 
@@ -15,9 +15,9 @@ function VoteList({
   voteService,
   openCreatorVoteForm
 }) {
+  const dispatch = useDispatch();
   const [progressStatus, setProgressStatus] = useState(IN_INIT);
   const { votes } = useSelector((state) => state.vote);
-  const dispatch = useDispatch();
 
   const handleClickCreateVote = () => {
     openCreatorVoteForm()

@@ -34,40 +34,6 @@ class FirebaseAuthentication extends Authentication {
     return await this.auth().currentUser.getIdToken();
   }
 
-  async signInWithGoogle() {
-    const result = await this.auth().signInWithPopup(new this.auth.GoogleAuthProvider());
-    return result.user;
-  }
-
-  async signUpEmail(email, pwd) {
-    try {
-      const data = await this.auth().createUserWithEmailAndPassword(email, pwd);
-      return {
-        success: true,
-        data
-      };
-    } catch(e) {
-      return this._createErrorForm(e);
-    }
-    
-  }
-
-  async signInEmail(email, pwd) {
-    try {
-      const data = await this.auth().signInWithEmailAndPassword(email, pwd)
-      return {
-        success: true,
-        data
-      };
-    } catch(e) {
-      return this._createErrorForm(e);
-    }
-  }
-
-  signOut() {
-    return this.auth().signOut();
-  }
-
   authStateChange(action) {
     this.auth().onAuthStateChanged(async (user) => {
       let data = null;
@@ -83,6 +49,40 @@ class FirebaseAuthentication extends Authentication {
       }
       this.store.dispatch(action(data));
     })
+  }
+
+  async signInEmail(email, pwd) {
+    try {
+      const data = await this.auth().signInWithEmailAndPassword(email, pwd)
+      return {
+        success: true,
+        data
+      };
+    } catch(e) {
+      return this._createErrorForm(e);
+    }
+  }
+
+  async signInWithGoogle() {
+    const result = await this.auth().signInWithPopup(new this.auth.GoogleAuthProvider());
+    return result.user;
+  }
+
+  signOut() {
+    return this.auth().signOut();
+  }
+
+  async signUpEmail(email, pwd) {
+    try {
+      const data = await this.auth().createUserWithEmailAndPassword(email, pwd);
+      return {
+        success: true,
+        data
+      };
+    } catch(e) {
+      return this._createErrorForm(e);
+    }
+    
   }
 }
 

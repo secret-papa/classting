@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import classnames from 'classnames/bind';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import style from './SignInStyle.scss';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { IN_INIT, IN_SUCCESS, IN_PROGRESS, IN_FAIL } from '../../constant/progress';
+import TextField from '@material-ui/core/TextField';
+
+import style from './SignInStyle.scss';
+import { IN_INIT, IN_PROGRESS, IN_FAIL } from '../../constant/progress';
 
 const cx = classnames.bind(style);
 
@@ -82,6 +83,10 @@ function SignIn({ authService }) {
     }
   };
 
+  const handleClickSignInWithGoogle = () => {
+    authService.signInWithGoogle();
+  };
+
   const handleClickSignUpEmail = async () => {
     setProgressStatus(IN_PROGRESS);
     const result = await authService.signUpEmail(emailForm.email, emailForm.pwd);
@@ -91,34 +96,30 @@ function SignIn({ authService }) {
     }
   }
 
-  const handleClickSignInWithGoogle = () => {
-    authService.signInWithGoogle();
-  };
-
   return (
     <div className={`${cx('sign_container')}`}>
       <div className={`${cx('sign_box')}`}>
         <h1 className={`${cx('sign_title')}`}>Sign</h1>
         <TextField
-          className={`${cx('email_form')}`}
-          type='email'
-          label='Email'
-          name='email'
-          value={emailForm.email}
           autoComplete="off"
-          onChange={handleChangeEmailForm}
+          className={`${cx('email_form')}`}
           error={formError.email.isError}
           helperText={formError.email.message}
+          label='Email'
+          name='email'
+          type='email'
+          value={emailForm.email}
+          onChange={handleChangeEmailForm}
         />
         <TextField
           className={`${cx('email_form')}`}
-          type='password'
-          label='Password'
-          name='pwd'
-          value={emailForm.pwd}
-          onChange={handleChangeEmailForm}
           error={formError.password.isError}
           helperText={formError.password.message}
+          label='Password'
+          name='pwd'
+          type='password'
+          value={emailForm.pwd}
+          onChange={handleChangeEmailForm}
         />
         {
           formError.etc.isError &&

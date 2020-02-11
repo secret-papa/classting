@@ -1,18 +1,18 @@
-const SET_VOTES = 'vote/SET_VOTES';
 const ADD_VOTE = 'vote/ADD_VOTE';
+const CAST_VOTE = 'vote/CAST_VOTE';
 const DELETE_VOTE = 'vote/DELETE_VOTE';
+const SET_VOTES = 'vote/SET_VOTES';
 const UPDATE_VOTE = 'vote/UPDATE_VOTE';
 
-const CAST_VOTE = 'vote/CAST_VOTE';
-
-export const setVotesAction = (votes) => ({
-  type: SET_VOTES,
-  payload: votes
-});
 
 export const addVoteAction = (newVote) => ({
   type: ADD_VOTE,
   payload: newVote
+});
+
+export const castVoteAction = (voteId) => ({
+  type: CAST_VOTE,
+  payload: voteId
 });
 
 export const deleteVoteAction = (voteId) => ({
@@ -20,14 +20,14 @@ export const deleteVoteAction = (voteId) => ({
   payload: voteId
 });
 
+export const setVotesAction = (votes) => ({
+  type: SET_VOTES,
+  payload: votes
+});
+
 export const updateVoteAction = (updateVote) => ({
   type: UPDATE_VOTE,
   payload: updateVote
-});
-
-export const castVoteAction = (voteId) => ({
-  type: CAST_VOTE,
-  payload: voteId
 });
 
 const initialState = {
@@ -42,10 +42,10 @@ export default function (state = initialState, action) {
         votes: [action.payload].concat(state.votes)
       }
     }
-    case SET_VOTES: {
+    case CAST_VOTE: {
       return {
         ...state,
-        votes: action.payload
+        votes: state.votes.map((vote) => vote.id === action.payload ? { ...vote, isViewerVote: true } : vote)
       }
     }
     case DELETE_VOTE: {
@@ -54,16 +54,16 @@ export default function (state = initialState, action) {
         votes: state.votes.filter(({ id }) => id !== action.payload)
       }
     }
+    case SET_VOTES: {
+      return {
+        ...state,
+        votes: action.payload
+      }
+    }
     case UPDATE_VOTE: {
       return {
         ...state,
         votes: state.votes.map((vote) => vote.id === action.payload.id ? action.payload : vote)
-      }
-    }
-    case CAST_VOTE: {
-      return {
-        ...state,
-        votes: state.votes.map((vote) => vote.id === action.payload ? { ...vote, isViewerVote: true} : vote)
       }
     }
     default: return state;

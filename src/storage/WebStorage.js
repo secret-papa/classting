@@ -6,16 +6,16 @@ class WebStorage extends Storage {
     this.storage = window.localStorage;
   }
 
-  setItem(key, data) {
-    this.storage.setItem(key, data)
+  deleteItem(key) {
+    this.storage.removeItem(key);
   }
 
   getItem(key) {
     return this.storage.getItem(key);
   }
 
-  deleteItem(key) {
-    this.storage.removeItem(key);
+  setItem(key, data) {
+    this.storage.setItem(key, data)
   }
 }
 

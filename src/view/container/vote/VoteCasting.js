@@ -1,31 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import classnames from 'classnames/bind';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import classnames from 'classnames/bind';
 import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
+
+import style from './VoteCasting.scss';
 import { IN_INIT, IN_PROGRESS, IN_SUCCESS, IN_FAIL } from '../../constant/progress';
 import { castVoteAction } from '../../../redux/vote';
-import style from './VoteCasting.scss';
 
 const cx = classnames.bind(style);
 
 function VoteCasting({
   voteId,
   voteItems,
+  voteService,
   setProgressStatus,
-  setVoteInfo,
-  voteService
+  setVoteInfo
 }) {
 
   const dispatch = useDispatch();
+  const [castProgressStatus, setCastProgressStatus] = useState(IN_INIT);
   const [items, setItems] = useState([]);
   const [isSelectItem, setIsSelectItem] = useState(false);
-  const [castProgressStatus, setCastProgressStatus] = useState(IN_INIT);
 
   const handleChagneCheck = (checkedId) => {
     setItems((items) => items.map(item => item.id === checkedId ? {...item, checked: true} : {...item, checked: false}));
